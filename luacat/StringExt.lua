@@ -55,3 +55,7 @@ end
 function string.rstrip(str)
   return _strip(str, false, true)
 end
+
+function string.hasPrefix(str, prefix)
+  return nil ~= string.find(str, prefix, 1)
+end

@@ -5,8 +5,6 @@ package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 
 
-UnitTest:setup()
-
 assert_equal( 1, 1 )
 assert_equal( {1}, {1} )
 
@@ -17,5 +15,8 @@ assert_equal( nil, nil )
 
 -- test fail
 assert_equal( 1, {2} )
+assert_equal( 1, {2} )
 
-UnitTest:report()
+if is_main() then
+  UnitTest:run()
+end
