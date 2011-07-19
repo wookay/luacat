@@ -9,7 +9,7 @@ UnitTest = { dot_if_passed = false, passed = 0, failed = 0 }
 
 local function extract_filename_line_from_debug_traceback(traceback)
   return string.strip(table.join(
-             table.slice(string.split(traceback, LF), 3,-2), ""))
+             table.slice(string.split(traceback, LF), 4,-2), ""))
 end
 
 local function _assert_equal(expected, got, expected_one, got_one)
