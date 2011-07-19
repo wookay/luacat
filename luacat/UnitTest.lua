@@ -5,9 +5,9 @@ local inspect = require 'inspect'
 require 'StringExt'
 require 'TableExt'
 
-UnitTest = { dot_if_passed = false, passed = 0, failed = 0 }
+UnitTest = { dot_if_passed = false, passed = 0, failed = 0, setupAt = nil }
 
-local function extract_filename_line_from_debug_traceback(traceback)
+local function _extract_filename_line_from_debug_traceback(traceback)
   return string.strip(table.join(
              table.slice(string.split(traceback, LF), 4,-2), ""))
 end
@@ -15,7 +15,7 @@ end
 local function _assert_equal(expected, got, expected_one, got_one)
   if expected ~= got then
     UnitTest.failed = UnitTest.failed + 1
-    io.write(extract_filename_line_from_debug_traceback(debug.traceback()))
+    io.write(_extract_filename_line_from_debug_traceback(debug.traceback()))
     io.write(string.format("\nAssertion failed\nExpected: %s\nGot: %s\n", inspect(expected_one), inspect(got_one)))
   else
     UnitTest.passed = UnitTest.passed + 1
@@ -35,13 +35,17 @@ function assert_equal(expected, got)
   end
 end
 
+function UnitTest:setup()
+  UnitTest.setupAt = os.clock()
+  UnitTest.dot_if_passed = true
+  print("Started")
+end
 
 function UnitTest:report()
+  print(string.format("Finished in %.4f seconds.", os.clock() - UnitTest.setupAt))
   print(string.format("%d tests, %d assertions, %d failures, %d errors",
     0,
     UnitTest.passed,
     UnitTest.failed,
     0))
---Started
---Finished in 0.0231 seconds.
 end
