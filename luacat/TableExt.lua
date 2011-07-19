@@ -10,6 +10,13 @@ function table.join(array, sep)
   return table.concat(array, sep)
 end
 
+function table.reverse(array)
+  local ary = {}
+  for idx = #array, 1, -1 do
+    table.insert(ary, array[idx])
+  end
+  return ary
+end
 
 -- http://snippets.luacode.org/snippets/Table_Slice_116
 function table.slice(array, i1, i2)
@@ -54,4 +61,12 @@ function table.values(dict)
     table.insert(values, value)
   end
   return values
+end
+
+
+------------------------
+-- Table Extensions
+------------------------
+function table.count(t)
+  return #table.keys(t)
 end

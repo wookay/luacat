@@ -56,6 +56,18 @@ function string.rstrip(str)
   return _strip(str, false, true)
 end
 
+function string.length(str)
+  return string.len(str)
+end
+
+function string.upcase(str)
+  return string.upper(str)
+end
+
+function string.downcase(str)
+  return string.lower(str)
+end
+
 function string.hasPrefix(str, prefix)
   return nil ~= string.find(str, prefix, 1)
 end

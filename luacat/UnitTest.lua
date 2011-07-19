@@ -18,13 +18,10 @@ local function _assert_equal(expected, got, expected_one, got_one)
     if UnitTest.dot_if_passed then
       io.write(LF)
     end
-    io.write(string.format("Assertion failed in %s\nExpected: %s\nGot: %s",
+    print(string.format("Assertion failed in %s\nExpected: %s\nGot: %s",
       _extract_filename_line_from_debug_traceback(debug.traceback()),
       inspect(expected_one),
       inspect(got_one)))
-    if not UnitTest.dot_if_passed then
-      io.write(LF)
-    end
   else
     UnitTest.passed = UnitTest.passed + 1
     if UnitTest.dot_if_passed then
