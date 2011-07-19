@@ -7,6 +7,10 @@ require 'UnitTest'
 assert_equal( 1, 1 )
 assert_equal( {1}, {1} )
 
+assert_equal( true, true )
+assert_equal( false, false )
 assert_equal( nil, nil )
-assert_equal( 1, 2 )
+
+
+-- test fail
 assert_equal( 1, {2} )
