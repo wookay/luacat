@@ -20,6 +20,8 @@ function test_dictionary()
   assert_equal({'a','b'}, table.keys(dict))
   assert_equal({'apple','banana'}, table.values(dict))
   assert_equal(2, table.count(dict))
+  table.insert(dict, {c = 'cat'})
+  assert_equal(3, table.count(dict))
 end
 
 

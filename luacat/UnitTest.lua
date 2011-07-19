@@ -5,7 +5,8 @@ local inspect = require 'inspect'
 require 'StringExt'
 require 'TableExt'
 
-UnitTest = { dot_if_passed = false, tests = 0, passed = 0, failed = 0, setupAt = nil }
+local currentTest = nil
+UnitTest = { dot_if_passed = false, tests = {}, passed = 0, failed = 0, setupAt = nil }
 
 local function _extract_filename_line_from_debug_traceback(traceback)
   return string.lstrip(string.split(table.join(
@@ -15,6 +16,9 @@ end
 local function _assert_equal(expected, got, expected_one, got_one)
   if expected ~= got then
     UnitTest.failed = UnitTest.failed + 1
+    if nil ~= currentTest then
+      UnitTest.tests[currentTest].failed = UnitTest.tests[currentTest].failed + 1
+    end
     if UnitTest.dot_if_passed then
       io.write(LF)
     end
@@ -24,6 +28,9 @@ local function _assert_equal(expected, got, expected_one, got_one)
       inspect(got_one)))
   else
     UnitTest.passed = UnitTest.passed + 1
+    if nil ~= currentTest then
+      UnitTest.tests[currentTest].passed = UnitTest.tests[currentTest].passed + 1
+    end
     if UnitTest.dot_if_passed then
       io.write('.')
     else
@@ -47,10 +54,10 @@ function UnitTest:setup()
 end
 
 function UnitTest:report()
-  if UnitTest.tests > 0 then
+  if table.count(UnitTest.tests) > 0 then
     print(string.format("\nFinished in %.4f seconds.", os.clock() - UnitTest.setupAt))
     print(string.format("%d tests, %d assertions, %d failures, %d errors",
-      UnitTest.tests,
+      table.count(UnitTest.tests),
       UnitTest.passed,
       UnitTest.failed,
       0))
@@ -60,14 +67,20 @@ end
 local TEST_PREFIX = 'test_'
 function UnitTest:run()
   local didSetup = false
-  for key,value in pairs(getfenv()) do
+  for key,func in pairs(getfenv()) do
     if string.hasPrefix(key, TEST_PREFIX) then
       if not didSetup then
         didSetup = true
         UnitTest:setup()
       end
-      UnitTest.tests = UnitTest.tests + 1
-      value()
+      UnitTest.tests[key] = {
+        test = func,
+        passed = 0,
+        failed = 0,
+      }
+      currentTest = key
+      func()
+      currentTest = nil
     end
   end
   UnitTest:report()

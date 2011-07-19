@@ -5,6 +5,9 @@
 LF = "\n"
 SPACE = " "
 
+function SWF(format, ...)
+  return string.format(format, ...)
+end
 
 function string.split(str, pat)
    local t = {}  -- NOTE: use {n = 0} in Lua-5.0

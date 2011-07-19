@@ -18,6 +18,8 @@ function test_string()
   assert_equal("cba", string.reverse("abc"))
   assert_equal("ABC", string.upcase("abc"))
   assert_equal("abc", string.downcase("ABC"))
+
+  assert_equal("abc def", SWF("abc %s", "def"))
 end
 
 
