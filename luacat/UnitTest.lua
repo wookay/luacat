@@ -14,7 +14,17 @@ local function _extract_filename_line_from_debug_traceback(traceback)
 end
 
 local function _assert_equal(expected, got, expected_one, got_one)
-  if expected ~= got then
+  if expected == got then
+    UnitTest.passed = UnitTest.passed + 1
+    if nil ~= currentTest then
+      UnitTest.tests[currentTest].passed = UnitTest.tests[currentTest].passed + 1
+    end
+    if UnitTest.dot_if_passed then
+      io.write('.')
+    else
+      print("passed: " .. inspect(got_one))
+    end
+  else
     UnitTest.failed = UnitTest.failed + 1
     if nil ~= currentTest then
       UnitTest.tests[currentTest].failed = UnitTest.tests[currentTest].failed + 1
@@ -26,16 +36,6 @@ local function _assert_equal(expected, got, expected_one, got_one)
       _extract_filename_line_from_debug_traceback(debug.traceback()),
       inspect(expected_one),
       inspect(got_one)))
-  else
-    UnitTest.passed = UnitTest.passed + 1
-    if nil ~= currentTest then
-      UnitTest.tests[currentTest].passed = UnitTest.tests[currentTest].passed + 1
-    end
-    if UnitTest.dot_if_passed then
-      io.write('.')
-    else
-      print("passed: " .. inspect(got_one))
-    end
   end
 end
 

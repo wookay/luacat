@@ -41,6 +41,69 @@ function table.slice(array, i1, i2)
   return res
 end
 
+function table.map(array, fun)
+  local ary = {}
+  for _,e in pairs(array) do
+    table.insert(ary, fun(e))
+  end 
+  return ary
+end
+
+function table.map_with_index(array, fun)
+  local ary = {}
+  for idx,e in ipairs(array) do
+    table.insert(ary, fun(e, idx))
+  end 
+  return ary
+end
+
+function table.each(array, fun)
+  for _,e in pairs(array) do
+    fun(e)
+  end
+end
+
+function table.each_with_index(array, fun)
+  for idx,e in ipairs(array) do
+    fun(e,idx)
+  end
+end
+
+function table.select(array, fun)
+  local ary = {}
+  for _,e in pairs(array) do
+    if fun(e) then
+      table.insert(ary, e)
+    end
+  end
+  return ary
+end
+
+function table.reject(array, fun)
+  local ary = {}
+  for _,e in pairs(array) do
+    if not fun(e) then
+      table.insert(ary, e)
+    end
+  end
+  return ary
+end
+
+function table.reduce(array, init, fun)
+  local result = init
+  for _,e in pairs(array) do
+    result = fun(result, e)
+  end
+  return result
+end
+
+local builtinsort = table.sort
+function table.sort(array)
+  local ary = array
+  local result = builtinsort(ary)
+  assert(nil == result)
+  return ary
+end
 
 
 ------------------------

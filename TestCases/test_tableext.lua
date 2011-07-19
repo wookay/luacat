@@ -13,7 +13,21 @@ function test_array()
   assert_equal(5, table.count(array))
   assert_equal({5,4,3,2,1}, table.reverse(array))
   assert_equal({}, table.reverse({}))
+  assert_equal({2,4,6}, table.map({1,2,3}, function(x) return x*2 end))
+  assert_equal({2,4,6}, table.map_with_index({1,2,3}, function(x,idx) return x + idx end))
+  assert_equal({1,2}, table.select({1,2,3}, function(x) return x<=2 end))
+  assert_equal({3}, table.reject({1,2,3}, function(x) return x<=2 end))
+  assert_equal(8, table.reduce({1,2,3}, 2, function(result,x) return result + x end))
+  assert_equal({1,2,3}, table.sort({2,3,1}))
+
+  local result = {}
+  table.each({1,2,3}, function(x) table.insert(result, x) end)
+  assert_equal({1,2,3}, result)
+  result = {}
+  table.each_with_index({5,6,7}, function(x,idx) result[idx] = x end)
+  assert_equal({5,6,7}, result)
 end
+
 
 function test_dictionary()
   local dict = { a = 'apple', b = 'banana' }
