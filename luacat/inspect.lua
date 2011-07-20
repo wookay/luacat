@@ -101,6 +101,11 @@ function Inspector:tabify()
   return self
 end
 
+function Inspector:tabify_indent()
+  self:puts("\n", string.rep("  ", self.level))
+  return self
+end
+
 function Inspector:up()
   self.level = self.level - 1
 end
@@ -142,10 +147,22 @@ function Inspector:putTable(t)
       end
 
       local dictKeys = getDictionaryKeys(t)
+      local MULTILINE_KEY_COUNT = 10
+      local multilined = #dictKeys > MULTILINE_KEY_COUNT
 
-      for _,k in ipairs(dictKeys) do
+      for idx,k in ipairs(dictKeys) do
         comma = self:putComma(comma)
+        if multilined then
+          if 1 == idx then
+            self:puts(" ")
+          else
+            self:tabify_indent()
+          end
+        end
         self:tabify():putKey(k):puts(' = '):putValue(t[k])
+      end
+      if multilined then
+        self:puts(" ")
       end
 
       if mt then

@@ -1,12 +1,22 @@
 -- StringExt.lua
 --                           wookay.noh at gmail.com 
 
+require 'ObjectExt'
+
 
 LF = "\n"
 SPACE = " "
 
 function SWF(format, ...)
   return string.format(format, ...)
+end
+
+function to_s(obj)
+  return tostring(obj)
+end
+
+function string.slice(str, from, to)
+  return string.sub(str, from, to)
 end
 
 function string.split(str, pat)
@@ -73,4 +83,8 @@ end
 
 function string.hasPrefix(str, prefix)
   return nil ~= string.find(str, prefix, 1)
+end
+
+function string.include(str, substr)
+  return nil ~= string.find(str, substr, 1)
 end

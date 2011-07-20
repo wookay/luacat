@@ -4,6 +4,8 @@
 local inspect = require 'inspect'
 require 'StringExt'
 require 'TableExt'
+require 'Exception'
+require 'Logger'
 
 local currentTest = nil
 UnitTest = { dot_if_passed = false, tests = {}, passed = 0, failed = 0, setupAt = nil }
@@ -45,6 +47,27 @@ function assert_equal(expected, got)
   else
     _assert_equal(expected, got, expected, got)
   end
+end
+
+function assert_nil(got)
+  _assert_equal(nil, got, nil, got)
+end
+
+function assert_not_nil(got)
+  _assert_equal(true, nil ~= got, "not nil", "not nil")
+end
+
+function assert_true(got)
+  _assert_equal(true, got, true, got)
+end
+
+function assert_false(got)
+  _assert_equal(false, got, false, got)
+end
+
+function assert_raise(exception, fun)
+  try(fun,
+  function(e) _assert_equal(true, string.include(e, exception), exception, e) end)
 end
 
 function UnitTest:setup()

@@ -5,6 +5,11 @@ package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 require 'TableExt'
 
+function test_nil()
+  assert_equal(0, #{nil})
+  assert_equal({}, {nil})
+end
+
 function test_array()
   local array = {1,2,3,4,5}
   assert_equal({1,2,3,4,5}, table.slice(array, 1, -1))
