@@ -8,10 +8,10 @@ function test_unittest()
   assert_equal( 1, 1 )
   assert_equal( {1}, {1} )
 
-  assert_equal( true, true )
-  assert_equal( false, false )
-  assert_equal( nil, nil )
-
+  assert_true( true )
+  assert_false( false )
+  assert_nil( nil )
+  assert_not_nil( not nil )
 
   -- test fail
   assert_equal( 1, 2 )

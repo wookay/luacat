@@ -26,11 +26,11 @@ function test_string()
 
   assert_equal("abc def", SWF("abc %s", "def"))
 
-  assert_equal(true, string.hasPrefix("hello", "he"))
-  assert_equal(false, string.hasPrefix("hello", "hi"))
+  assert_true(string.hasPrefix("hello", "he"))
+  assert_false(string.hasPrefix("hello", "hi"))
 
-  assert_equal(true, string.include("hello", "lo"))
-  assert_equal(false, string.include("hello", "lu"))
+  assert_true(string.include("hello", "lo"))
+  assert_false(string.include("hello", "lu"))
 
 end
 

@@ -9,9 +9,9 @@ require 'Logger'
 function test_number()
   assert_equal(1, string_to_int("1"))
   assert_equal(3.14, string_to_float("3.14"))
+  assert_true(3.141592653589 < PI)
   
   local random = get_random(2)
-  -- log_info(random)
   assert_true(0 <= random)
 end
 

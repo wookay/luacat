@@ -6,6 +6,8 @@ require 'UnitTest'
 require 'ObjectExt'
 
 function test_object()
+  assert_nil(nil)
+  assert_not_nil(not nil)
   assert_true(is_nil(nil))
   assert_true(is_not_nil(0))
 end
