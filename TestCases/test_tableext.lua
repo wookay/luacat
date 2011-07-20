@@ -17,6 +17,15 @@ function test_array()
   assert_equal("1 2 3 4 5", table.join(array, " "))
   assert_equal(5, table.count(array))
   assert_equal({5,4,3,2,1}, table.reverse(array))
+
+  local pushed = table.push(array, 6)
+  assert_equal({1,2,3,4,5,6}, array)
+  assert_equal({1,2,3,4,5,6}, pushed)
+
+  local popped = table.pop(array)
+  assert_equal(6, popped)
+  assert_equal({1,2,3,4,5}, array)
+
   assert_equal({}, table.reverse({}))
   assert_equal({2,4,6}, table.map({1,2,3}, function(x) return x*2 end))
   assert_equal({2,4,6}, table.map_with_index({1,2,3}, function(x,idx) return x + idx end))
@@ -43,10 +52,7 @@ function test_dictionary()
   local merged = table.merge(dict, {c='cat'})
   assert_equal(2, table.count(dict))
   assert_equal(3, table.count(merged))
-
-  table.append(dict, {c='cat'})
-  assert_equal(3, table.count(dict))
-  assert_equal({'a','b','c'}, table.sort(table.keys(dict)))
+  assert_equal({'a','b','c'}, table.sort(table.keys(merged)))
 end
 
 

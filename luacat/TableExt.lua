@@ -10,6 +10,22 @@ function table.join(array, sep)
   return table.concat(array, sep)
 end
 
+function table.push(array, e)
+  table.insert(array, e)
+  return array
+end
+
+function table.pop(array)
+  local count = #array
+  if 0 == count then
+    return nil
+  else
+    local e = array[count]
+    table.remove(array, count)
+    return e
+  end
+end
+
 function table.reverse(array)
   local ary = {}
   for idx = #array, 1, -1 do
@@ -124,13 +140,6 @@ function table.values(dict)
     table.insert(values, value)
   end
   return values
-end
-
-function table.append(dict, kv)
-  for k,v in pairs(kv) do
-    dict[k] = v
-  end
-  return dict
 end
 
 function table.merge(dict, kv)
