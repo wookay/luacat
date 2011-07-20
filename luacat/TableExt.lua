@@ -126,6 +126,24 @@ function table.values(dict)
   return values
 end
 
+function table.append(dict, kv)
+  for k,v in pairs(kv) do
+    dict[k] = v
+  end
+  return dict
+end
+
+function table.merge(dict, kv)
+  local newDict = {}
+  for k,v in pairs(dict) do
+    newDict[k] = v
+  end
+  for k,v in pairs(kv) do
+    newDict[k] = v
+  end
+  return newDict
+end
+
 
 ------------------------
 -- Table Extensions

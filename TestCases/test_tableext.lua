@@ -34,8 +34,14 @@ function test_dictionary()
   assert_equal({'a','b'}, table.keys(dict))
   assert_equal({'apple','banana'}, table.values(dict))
   assert_equal(2, table.count(dict))
-  table.insert(dict, {c = 'cat'})
+
+  local merged = table.merge(dict, {c='cat'})
+  assert_equal(2, table.count(dict))
+  assert_equal(3, table.count(merged))
+
+  table.append(dict, {c='cat'})
   assert_equal(3, table.count(dict))
+  assert_equal({'a','b','c'}, table.sort(table.keys(dict)))
 end
 
 
