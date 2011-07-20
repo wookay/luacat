@@ -34,6 +34,11 @@ function test_string()
 
 end
 
+function test_to_s()
+  assert_equal("nil", to_s(nil))
+  assert_equal("{}", to_s({}))
+end
+
 
 if is_main() then 
   UnitTest.run()

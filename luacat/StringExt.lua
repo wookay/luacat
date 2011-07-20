@@ -1,9 +1,6 @@
 -- StringExt.lua
 --                           wookay.noh at gmail.com 
 
-require 'ObjectExt'
-
-
 LF = "\n"
 SPACE = " "
 
@@ -12,7 +9,7 @@ function SWF(format, ...)
 end
 
 function to_s(obj)
-  return tostring(obj)
+  return inspect(obj)
 end
 
 function string.slice(str, from, to)
