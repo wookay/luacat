@@ -13,9 +13,12 @@ function test_unittest()
   assert_nil( nil )
   assert_not_nil( not nil )
 
+  assert_not_empty("a")
+  assert_one_of({1,2}, 1)
+
   -- test fail
-  assert_equal( 1, 2 )
-  assert_equal( "", {2} )
+  -- assert_equal( 1, 2 )
+  -- assert_equal( "", {2} )
 end
 
 

@@ -187,6 +187,10 @@ end
 ------------------------
 -- Table Extensions
 ------------------------
+function table.is_empty(t)
+  return 0 == table.count(t)
+end 
+
 function table.count(t)
   return #table.keys(t)
 end

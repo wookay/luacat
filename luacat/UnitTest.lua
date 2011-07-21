@@ -54,7 +54,21 @@ function assert_nil(got)
 end
 
 function assert_not_nil(got)
-  _assert_equal(true, nil ~= got, "not nil", "not nil")
+  _assert_equal(true, nil ~= got, "not nil", got)
+end
+
+function assert_not_empty(got)
+  if "table" == type(got) then
+    _assert_equal(false, table.is_empty(got), "not empty", got)
+  elseif "string" == type(got) then
+    _assert_equal(false, string.is_empty(got), "not empty", got)
+  else
+    error(SWF("assert_not_empty but %s", to_s(got)))
+  end
+end
+
+function assert_one_of(expected, got)
+  _assert_equal(true, table.include(expected, got), "one of", got)
 end
 
 function assert_true(got)

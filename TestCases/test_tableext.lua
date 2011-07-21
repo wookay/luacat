@@ -63,6 +63,8 @@ function test_array()
 
   assert_true(table.include({1,2,3}, 1))
   assert_false(table.include({1,2,3}, 0))
+
+  assert_not_empty({1})
 end
 
 

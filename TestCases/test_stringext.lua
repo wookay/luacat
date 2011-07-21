@@ -39,6 +39,9 @@ function test_string()
 
   assert_equal({"a","b","c"}, _w("a b c"))
   assert_equal("abcd", string.gsub("abcff","ff","d"))
+
+  assert_not_empty(" ")
+
 end
 
 function test_to_s()
