@@ -91,7 +91,7 @@ local TEST_PREFIX = 'test_'
 function UnitTest:run()
   local didSetup = false
   for key,func in pairs(getfenv()) do
-    if string.hasPrefix(key, TEST_PREFIX) then
+    if string.start_with(key, TEST_PREFIX) then
       if not didSetup then
         didSetup = true
         UnitTest:setup()

@@ -8,6 +8,10 @@ function SWF(format, ...)
   return string.format(format, ...)
 end
 
+function _w(str)
+  return string.split(str, SPACE)
+end
+
 function to_s(obj)
   return inspect(obj)
 end
@@ -78,8 +82,14 @@ function string.downcase(str)
   return string.lower(str)
 end
 
-function string.hasPrefix(str, prefix)
-  return nil ~= string.find(str, prefix, 1)
+local PLAIN = true
+function string.start_with(str, prefix)
+  return string.find(str, prefix, 1, PLAIN) == 1
+end
+
+function string.end_with(str, suffix)
+  local idx = #str - #suffix + 1
+  return string.find(str, suffix, idx, PLAIN) == idx
 end
 
 function string.include(str, substr)

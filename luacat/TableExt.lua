@@ -34,6 +34,19 @@ function table.reverse(array)
   return ary
 end
 
+function table.index(array, obj)
+  for idx,e in ipairs(array) do
+    if e == obj then
+      return idx
+    end
+  end
+  return nil
+end
+
+function table.at(array, idx)
+  return array[idx]
+end
+
 -- http://snippets.luacode.org/snippets/Table_Slice_116
 function table.slice(array, i1, i2)
   local n = #array
@@ -114,11 +127,19 @@ function table.reduce(array, init, fun)
 end
 
 local builtinsort = table.sort
-function table.sort(array)
-  local ary = array
-  local result = builtinsort(ary)
-  assert(nil == result)
+function table.sort(array, ...)
+  local ary = table.to_a(array)
+  builtinsort(ary, ...)
   return ary
+end
+
+function table.include(array, element)
+  for _,e in pairs(array) do
+    if e == element then
+      return true
+    end
+  end
+  return false
 end
 
 
@@ -153,10 +174,31 @@ function table.merge(dict, kv)
   return newDict
 end
 
+function table.has_key(dict, key)
+  for k,v in pairs(dict) do
+    if k == key then
+      return true
+    end
+  end
+  return false
+end
+
 
 ------------------------
 -- Table Extensions
 ------------------------
 function table.count(t)
   return #table.keys(t)
+end
+
+function table.to_a(t)
+  local ary = {}
+  for k,v in pairs(t) do
+    if "string" == type(k) then
+      ary[#ary + 1] = {k,v}
+    else
+      ary[#ary + 1] = v
+    end
+  end
+  return ary
 end

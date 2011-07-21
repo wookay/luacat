@@ -25,13 +25,20 @@ function test_string()
   assert_equal("abc", string.downcase("ABC"))
 
   assert_equal("abc def", SWF("abc %s", "def"))
+  assert_equal("0xff", SWF("0x%x", 255))
 
-  assert_true(string.hasPrefix("hello", "he"))
-  assert_false(string.hasPrefix("hello", "hi"))
-
+  assert_true(string.start_with("hello", "he"))
+  assert_false(string.start_with("hello", "lo"))
+  assert_true(string.end_with("", ""))
+  assert_false(string.end_with("", "a"))
+  assert_true(string.end_with("hello", ""))
+  assert_true(string.end_with("hello", "lo"))
+  assert_false(string.end_with("hello", "he"))
   assert_true(string.include("hello", "lo"))
-  assert_false(string.include("hello", "lu"))
+  assert_false(string.include("hello", "loo"))
 
+  assert_equal({"a","b","c"}, _w("a b c"))
+  assert_equal("abcd", string.gsub("abcff","ff","d"))
 end
 
 function test_to_s()
