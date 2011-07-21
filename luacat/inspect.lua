@@ -149,6 +149,14 @@ function Inspector:putTable(t)
       local dictKeys = getDictionaryKeys(t)
       local MULTILINE_KEY_COUNT = 10
       local multilined = #dictKeys > MULTILINE_KEY_COUNT
+      if not multilined then
+        for k,v in pairs(t) do
+          if "table" == type(v) then
+            multilined = true
+            break
+          end
+        end
+      end
 
       for idx,k in ipairs(dictKeys) do
         comma = self:putComma(comma)
