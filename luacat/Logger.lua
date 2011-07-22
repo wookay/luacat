@@ -13,7 +13,7 @@ local function _extract_filename_line_for_log_info(traceback)
 end
 
 local function print_line(line)
-  print(string.format("%-20s %s", 
+  print(string.format("%-23s %s", 
     _extract_filename_line_for_log_info(debug.traceback()), line))
 end
 

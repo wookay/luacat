@@ -11,17 +11,6 @@ function is_odd(num)
   return 1 == num % 2
 end
 
-function Number.is_odd(self)
-  return is_odd(self)
-end
-
-function _n(n)
-  local number = { value = n }
-  setmetatable(number, Number.mt)
-  return number
-end
-
-
 function int_to_char(num)
   return string.char(num)
 end
@@ -42,6 +31,14 @@ function string_to_float(str)
   end
 end
 
+
+function Number.is_odd(self)
+  return is_odd(self)
+end
+
+function Number.chr(self)
+  return int_to_char(self)
+end
 
 
 local _socket = nil

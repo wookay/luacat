@@ -21,7 +21,6 @@ function test_array()
   assert_equal({2,3,4,5}, Table.slice(array, 2, -1))
   assert_equal("1 2 3 4 5", Table.join(array, " "))
   assert_equal("1, 2, 3, 4, 5", Table.join(array, ", "))
-  assert_equal(5, Table.count(array))
   assert_equal({5,4,3,2,1}, Table.reverse(array))
   assert_equal({1,2,3,4,5}, Table.to_a(array))
 
@@ -69,6 +68,9 @@ function test_array()
   assert_false(Table.include({1,2,3}, 0))
 
   assert_not_empty({1})
+
+  assert_equal(5, Table.count({1,2,3,3,5}))
+  assert_equal(2, Table.count({1,2,3,3,5}, 3))
 end
 
 

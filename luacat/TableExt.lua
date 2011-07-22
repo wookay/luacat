@@ -1,8 +1,9 @@
 -- TableExt.lua
 --                           wookay.noh at gmail.com 
 
-
 require 'ObjectExt'
+
+
 -------------------
 -- Array Extensions
 -------------------
@@ -139,6 +140,7 @@ function Table.include(array, element)
 end
 
 
+
 ------------------------
 -- Dictionary Extensions
 ------------------------
@@ -180,20 +182,31 @@ function Table.has_key(dict, key)
 end
 
 
+
 ------------------------
 -- Table Extensions
 ------------------------
-function Table.is_empty(t)
-  return 0 == Table.count(t)
+function Table.is_empty(self)
+  return 0 == Table.count(self)
 end 
 
-function Table.count(t)
-  return #Table.keys(t)
+function Table.count(self, e)
+  if nil == e then
+    return #Table.keys(self)
+  else
+    local cnt = 0
+    for k,v in pairs(self) do
+      if v == e then
+        cnt = cnt + 1
+      end
+    end 
+    return cnt
+  end
 end
 
-function Table.to_a(t)
+function Table.to_a(self)
   local ary = {}
-  for k,v in pairs(t) do
+  for k,v in pairs(self) do
     if "string" == type(k) then
       ary[#ary + 1] = {k,v}
     else

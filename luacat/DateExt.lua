@@ -7,20 +7,6 @@ local ONE_DAY_HOURS      = 24
 
 Date = extends(Object)
 
-local function _new_date(time)
-  local date = os.date("*t", time)
-  date.time = time
-  local valueTable = { __type = 'date', __value = date }
-  setmetatable(valueTable, Date.mt)
-  return valueTable
-end
-
-Date.mt.__lt = function(a, b)
-  return a.time < b.time
-end
-Date.mt.__sub = function(a, b)
-  return a.time - b.time
-end
 
 function time_interval_to_days(time_interval)
   local seconds = time_interval
@@ -40,13 +26,20 @@ function time_interval_to_days(time_interval)
   return { days = days, hours = hours, minutes = minutes, seconds = seconds }
 end
 
-
-function Date.today()
-  return _new_date(os.time())
+local function _new_date(time)
+  local date = os.date("*t", time)
+  date.time = time
+  local valueTable = { __type = 'date', __value = date }
+  setmetatable(valueTable, Date.mt)
+  return valueTable
 end
 
 function Date.new(year, month, day)
   return _new_date(os.time({year=year,month=month,day=day,hour=0,min=0,sec=0}))
+end
+
+function Date.today()
+  return _new_date(os.time())
 end
 
 function Date.yesterday(self)
@@ -77,6 +70,13 @@ function Number.minutes(self)
 end
 function Number.seconds(self)
   return self
+end
+
+Date.mt.__lt = function(a, b)
+  return a.time < b.time
+end
+Date.mt.__sub = function(a, b)
+  return a.time - b.time
 end
 
 

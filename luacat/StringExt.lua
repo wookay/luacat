@@ -21,12 +21,48 @@ function to_s(obj)
   return inspect(obj)
 end
 
+
+--------------------
+-- String Extensions
+--------------------
+
 function String.is_empty(str)
   return 0 == #str
 end
 
 function String.slice(self, from, to)
   return string.sub(self, from, to)
+end
+
+function String.length(self)
+  return string.len(self)
+end
+
+function String.reverse(self)
+  return string.reverse(self)
+end
+
+function String.upcase(self)
+  return string.upper(self)
+end
+
+function String.downcase(self)
+  return string.lower(self)
+end
+
+
+local PLAIN = true
+function String.start_with(self, prefix)
+  return string.find(self, prefix, 1, PLAIN) == 1
+end
+
+function String.end_with(self, suffix)
+  local idx = #self - #suffix + 1
+  return string.find(self, suffix, idx, PLAIN) == idx
+end
+
+function String.include(self, substr)
+  return nil ~= string.find(self, substr, 1)
 end
 
 function String.split(self, pat)
@@ -48,9 +84,6 @@ function String.split(self, pat)
     return t
 end
 
-
-
-local PLAIN = true
 -- http://penlight.luaforge.net/
 local function _find_all(s,sub,first,last)
   local i1,i2 = string.find(s,sub,first,PLAIN)
@@ -66,6 +99,7 @@ local function _find_all(s,sub,first,last)
   end
   return res,k
 end
+
 local function _strip(str, stripLeft, stripRight)
     if stripLeft then
         local i1,i2 = string.find(str, '^%s*')
@@ -97,33 +131,4 @@ end
 
 function String.rstrip(self)
   return _strip(self, false, true)
-end
-
-function String.length(self)
-  return string.len(self)
-end
-
-function String.reverse(self)
-  return string.reverse(self)
-end
-
-function String.upcase(self)
-  return string.upper(self)
-end
-
-function String.downcase(self)
-  return string.lower(self)
-end
-
-function String.start_with(self, prefix)
-  return string.find(self, prefix, 1, PLAIN) == 1
-end
-
-function String.end_with(self, suffix)
-  local idx = #self - #suffix + 1
-  return string.find(self, suffix, idx, PLAIN) == idx
-end
-
-function String.include(self, substr)
-  return nil ~= string.find(self, substr, 1)
 end

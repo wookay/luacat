@@ -20,26 +20,26 @@ log_info( {a=1, b=2, c=3, d=4, e=5, f=6, g=7, h=8, i=9, j=10, k=11} )
 
 --[[
 
-test_logger.lua:8    nil
-test_logger.lua:9    123
-test_logger.lua:10   abc
-test_logger.lua:11   {1, 2, 3}
-test_logger.lua:12   {a = 1, b = 2}
-test_logger.lua:13   test 1 : 1
-test_logger.lua:14   test "abc" : abc
-test_logger.lua:15   test nil : nil
-test_logger.lua:16   test {1} : {1}
-test_logger.lua:17   test {a=1} {b=2} : {a = 1} {b = 2}
-test_logger.lua:18   { a = 1, 
-  c = 3, 
+test_logger.lua:8       nil
+test_logger.lua:9       123
+test_logger.lua:10      abc
+test_logger.lua:11      {1, 2, 3}
+test_logger.lua:12      {a = 1, b = 2}
+test_logger.lua:13      test 1 : 1
+test_logger.lua:14      test "abc" : abc
+test_logger.lua:15      test nil : nil
+test_logger.lua:16      test {1} : {1}
+test_logger.lua:17      test {a=1} {b=2} : {a = 1} {b = 2}
+test_logger.lua:18      { a = 1, 
   b = 2, 
-  e = 5, 
+  c = 3, 
   d = 4, 
-  g = 7, 
+  e = 5, 
   f = 6, 
-  i = 9, 
+  g = 7, 
   h = 8, 
-  k = 11, 
-  j = 10 }
+  i = 9, 
+  j = 10, 
+  k = 11 }
 
 --]]
