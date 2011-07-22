@@ -12,6 +12,9 @@ function test_metatable()
 
   local mt = getmetatable(dict)
   assert_equal({}, mt)
+
+  assert_nil(getmetatable(nil))
+  assert_nil(getmetatable(1))
 end
 
 if is_main() then

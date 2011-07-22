@@ -1,47 +1,51 @@
 -- StringExt.lua
 --                           wookay.noh at gmail.com 
 
+require 'ObjectExt'
+local inspect = require 'inspect'
+
 LF = "\n"
 DOT = "."
 SPACE = " "
+
 
 function SWF(format, ...)
   return string.format(format, ...)
 end
 
 function _w(str)
-  return string.split(str, SPACE)
+  return String.split(str, SPACE)
 end
 
 function to_s(obj)
   return inspect(obj)
 end
 
-function string.is_empty(str)
+function String.is_empty(str)
   return 0 == #str
 end
 
-function string.slice(str, from, to)
-  return string.sub(str, from, to)
+function String.slice(self, from, to)
+  return string.sub(self, from, to)
 end
 
-function string.split(str, pat)
-   local t = {}  -- NOTE: use {n = 0} in Lua-5.0
-   local fpat = "(.-)" .. pat
-   local last_end = 1
-   local s, e, cap = str:find(fpat, 1)
-   while s do
-      if s ~= 1 or cap ~= "" then
-	 table.insert(t,cap)
-      end
-      last_end = e+1
-      s, e, cap = str:find(fpat, last_end)
-   end
-   if last_end <= #str then
-      cap = str:sub(last_end)
-      table.insert(t, cap)
-   end
-   return t
+function String.split(self, pat)
+    local t = {}  -- NOTE: use {n = 0} in Lua-5.0
+    local fpat = "(.-)" .. pat
+    local last_end = 1
+    local s, e, cap = string.find(self, fpat, 1)
+    while s do
+       if s ~= 1 or cap ~= "" then
+      table.insert(t,cap)
+       end
+       last_end = e+1
+       s, e, cap = string.find(self, fpat, last_end)
+    end
+    if last_end <= #self then
+       cap = string.sub(self, last_end)
+       table.insert(t, cap)
+    end
+    return t
 end
 
 
@@ -78,44 +82,48 @@ local function _strip(str, stripLeft, stripRight)
     return str
 end
 
-function string.count(str, substr)
-  local _,cnt = _find_all(str, substr, 1)
+function String.count(self, substr)
+  local _,cnt = _find_all(self, substr, 1)
   return cnt
 end
 
-function string.strip(str)
-  return _strip(str, true, true)
+function String.strip(self)
+  return _strip(self, true, true)
 end
 
-function string.lstrip(str)
-  return _strip(str, true, false)
+function String.lstrip(self)
+  return _strip(self, true, false)
 end
 
-function string.rstrip(str)
-  return _strip(str, false, true)
+function String.rstrip(self)
+  return _strip(self, false, true)
 end
 
-function string.length(str)
-  return string.len(str)
+function String.length(self)
+  return string.len(self)
 end
 
-function string.upcase(str)
-  return string.upper(str)
+function String.reverse(self)
+  return string.reverse(self)
 end
 
-function string.downcase(str)
-  return string.lower(str)
+function String.upcase(self)
+  return string.upper(self)
 end
 
-function string.start_with(str, prefix)
-  return string.find(str, prefix, 1, PLAIN) == 1
+function String.downcase(self)
+  return string.lower(self)
 end
 
-function string.end_with(str, suffix)
-  local idx = #str - #suffix + 1
-  return string.find(str, suffix, idx, PLAIN) == idx
+function String.start_with(self, prefix)
+  return string.find(self, prefix, 1, PLAIN) == 1
 end
 
-function string.include(str, substr)
-  return nil ~= string.find(str, substr, 1)
+function String.end_with(self, suffix)
+  local idx = #self - #suffix + 1
+  return string.find(self, suffix, idx, PLAIN) == idx
+end
+
+function String.include(self, substr)
+  return nil ~= string.find(self, substr, 1)
 end

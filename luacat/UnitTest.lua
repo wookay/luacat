@@ -2,17 +2,17 @@
 --                           wookay.noh at gmail.com 
 
 local inspect = require 'inspect'
+require 'Exception'
 require 'StringExt'
 require 'TableExt'
-require 'Exception'
-require 'Logger'
 
 local currentTest = nil
 UnitTest = { dot_if_passed = false, tests = {}, passed = 0, failed = 0, setupAt = nil }
 
+
 local function _extract_filename_line_from_debug_traceback(traceback)
-  return string.lstrip(string.split(table.join(
-             table.slice(string.split(traceback, LF), 4,-2), ""), ': ')[1])
+  return _(_(_(_(_(traceback).
+                   split(LF)).slice(4,-2)).join("")).split(': ')[1]).lstrip()
 end
 
 local function _assert_equal(expected, got, expected_one, got_one)
@@ -59,16 +59,16 @@ end
 
 function assert_not_empty(got)
   if "table" == type(got) then
-    _assert_equal(false, table.is_empty(got), "not empty", got)
+    _assert_equal(false, Table.is_empty(got), "not empty", got)
   elseif "string" == type(got) then
-    _assert_equal(false, string.is_empty(got), "not empty", got)
+    _assert_equal(false, String.is_empty(got), "not empty", got)
   else
     error(SWF("assert_not_empty but %s", to_s(got)))
   end
 end
 
 function assert_one_of(expected, got)
-  _assert_equal(true, table.include(expected, got), "one of", got)
+  _assert_equal(true, Table.include(expected, got), "one of", got)
 end
 
 function assert_true(got)
@@ -81,7 +81,7 @@ end
 
 function assert_raise(exception, fun)
   try(fun,
-  function(e) _assert_equal(true, string.include(e, exception), exception, e) end)
+  function(e) _assert_equal(true, String.include(e, exception), exception, e) end)
 end
 
 function UnitTest:setup()
@@ -91,10 +91,10 @@ function UnitTest:setup()
 end
 
 function UnitTest:report()
-  if table.count(UnitTest.tests) > 0 then
+  if Table.count(UnitTest.tests) > 0 then
     print(string.format("\nFinished in %.4f seconds.", os.clock() - UnitTest.setupAt))
     print(string.format("%d tests, %d assertions, %d failures, %d errors",
-      table.count(UnitTest.tests),
+      Table.count(UnitTest.tests),
       UnitTest.passed,
       UnitTest.failed,
       0))
@@ -105,7 +105,7 @@ local TEST_PREFIX = 'test_'
 function UnitTest:run()
   local didSetup = false
   for key,func in pairs(getfenv()) do
-    if string.start_with(key, TEST_PREFIX) then
+    if String.start_with(key, TEST_PREFIX) then
       if not didSetup then
         didSetup = true
         UnitTest:setup()

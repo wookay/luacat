@@ -17,6 +17,8 @@ function test_number()
   assert_equal(1.2, string_to_float("1.2.3"))
   assert_true(3.141592653589 < PI)
   
+  assert_false(_(0).is_odd())
+  assert_true(_(1).is_odd())
   assert_false(is_odd(0))
   assert_true(is_odd(1))
   assert_false(is_odd(2))

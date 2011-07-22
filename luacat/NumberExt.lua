@@ -2,10 +2,25 @@
 --                           wookay.noh at gmail.com 
 
 require 'ObjectExt'
-require 'Exception'
 
 PI = math.pi
 FF = 255
+
+
+function is_odd(num)
+  return 1 == num % 2
+end
+
+function Number.is_odd(self)
+  return is_odd(self)
+end
+
+function _n(n)
+  local number = { value = n }
+  setmetatable(number, Number.mt)
+  return number
+end
+
 
 function int_to_char(num)
   return string.char(num)
@@ -20,16 +35,13 @@ function string_to_int(str)
 end
 
 function string_to_float(str)
-  if string.count(str, DOT) > 1 then
+  if String.count(str, DOT) > 1 then
     return tonumber(string.match(str, "%d.%d"))
   else
     return tonumber(str)
   end
 end
 
-function is_odd(num)
-  return 1 == num % 2
-end
 
 
 local _socket = nil

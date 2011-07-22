@@ -3,8 +3,19 @@
 
 
 inspect = require 'inspect'
+require 'ObjectExt'
 require 'TableExt'
 require 'Exception'
+
+local function _extract_filename_line_for_log_info(traceback)
+  return _(_(_(traceback).
+               split("in function 'log_info'")[2]).split(': ')[1]).lstrip()
+end
+
+local function print_line(line)
+  print(string.format("%-20s %s", 
+    _extract_filename_line_for_log_info(debug.traceback()), line))
+end
 
 function log_info(one, ...)
   local fun = function(x)
@@ -16,9 +27,9 @@ function log_info(one, ...)
   end
   local rest = {...}
   if 0 == #rest then
-    print(fun(one))
+    print_line(fun(one))
   else
-    try(function() print(string.format(one, unpack(table.map(rest, fun)))) end,
-    function(exception) print(exception, one, inspect(rest)) end)
+    try(function() print_line(string.format(one, unpack(Table.map(rest, fun)))) end,
+    function(exception) print_line(exception, one, inspect(rest)) end)
   end
 end

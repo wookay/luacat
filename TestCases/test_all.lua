@@ -8,8 +8,9 @@ require 'test_tableext'
 require 'test_numberext'
 require 'test_objectext'
 require 'test_dateext'
-require 'test_metatable'
 require 'test_exception'
+require 'test_metatable'
+require 'test_unittest'
 
 
 if is_main() then

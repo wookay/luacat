@@ -2,20 +2,21 @@
 --                           wookay.noh at gmail.com 
 
 
+require 'ObjectExt'
 -------------------
 -- Array Extensions
 -------------------
 
-function table.join(array, sep)
+function Table.join(array, sep)
   return table.concat(array, sep)
 end
 
-function table.push(array, e)
+function Table.push(array, e)
   table.insert(array, e)
   return array
 end
 
-function table.pop(array)
+function Table.pop(array)
   local count = #array
   if 0 == count then
     return nil
@@ -26,7 +27,7 @@ function table.pop(array)
   end
 end
 
-function table.reverse(array)
+function Table.reverse(array)
   local ary = {}
   for idx = #array, 1, -1 do
     table.insert(ary, array[idx])
@@ -34,7 +35,7 @@ function table.reverse(array)
   return ary
 end
 
-function table.index(array, obj)
+function Table.index(array, obj)
   for idx,e in ipairs(array) do
     if e == obj then
       return idx
@@ -43,34 +44,29 @@ function table.index(array, obj)
   return nil
 end
 
-function table.at(array, idx)
-  return array[idx]
-end
-
--- http://snippets.luacode.org/snippets/Table_Slice_116
-function table.slice(array, i1, i2)
-  local n = #array
-  -- default values for range
-  i1 = i1 or 1
-  i2 = i2 or n
-  if i2 < 0 then
-    i2 = n + i2 + 1
-  elseif i2 > n then
-    i2 = n
-  end
-  if i1 < 1 or i1 > n then
-    return {}
-  end
-  local res = {}
-  local k = 1
-  for i = i1,i2 do
-    res[k] = array[i]
-    k = k + 1
+-- http://penlight.luaforge.net/
+function Table.slice(array, first, last)
+  local sz = #array
+  --if not first then first=1 end
+  if first < 0 then first=sz+first+1 end
+  if not last then last=sz end
+  if last < 0 then last=sz+1+last end
+  local res={}
+  for i = first, last do
+    table.insert(res, array[i])
   end
   return res
 end
 
-function table.map(array, fun)
+function Table.at(array, idx)
+  if idx > 0 then
+    return array[idx]
+  else
+    return Table.slice(array, idx, idx)[1]
+  end
+end
+
+function Table.map(array, fun)
   local ary = {}
   for _,e in pairs(array) do
     table.insert(ary, fun(e))
@@ -78,7 +74,7 @@ function table.map(array, fun)
   return ary
 end
 
-function table.map_with_index(array, fun)
+function Table.map_with_index(array, fun)
   local ary = {}
   for idx,e in ipairs(array) do
     table.insert(ary, fun(e, idx))
@@ -86,19 +82,19 @@ function table.map_with_index(array, fun)
   return ary
 end
 
-function table.each(array, fun)
+function Table.each(array, fun)
   for _,e in pairs(array) do
     fun(e)
   end
 end
 
-function table.each_with_index(array, fun)
+function Table.each_with_index(array, fun)
   for idx,e in ipairs(array) do
     fun(e,idx)
   end
 end
 
-function table.select(array, fun)
+function Table.select(array, fun)
   local ary = {}
   for _,e in pairs(array) do
     if fun(e) then
@@ -108,7 +104,7 @@ function table.select(array, fun)
   return ary
 end
 
-function table.reject(array, fun)
+function Table.reject(array, fun)
   local ary = {}
   for _,e in pairs(array) do
     if not fun(e) then
@@ -118,7 +114,7 @@ function table.reject(array, fun)
   return ary
 end
 
-function table.reduce(array, init, fun)
+function Table.reduce(array, init, fun)
   local result = init
   for _,e in pairs(array) do
     result = fun(result, e)
@@ -127,13 +123,13 @@ function table.reduce(array, init, fun)
 end
 
 local builtinsort = table.sort
-function table.sort(array, ...)
-  local ary = table.to_a(array)
+function Table.sort(array, ...)
+  local ary = Table.to_a(array)
   builtinsort(ary, ...)
   return ary
 end
 
-function table.include(array, element)
+function Table.include(array, element)
   for _,e in pairs(array) do
     if e == element then
       return true
@@ -147,7 +143,7 @@ end
 -- Dictionary Extensions
 ------------------------
 
-function table.keys(dict)
+function Table.keys(dict)
   local keys = {}
   for key, _ in pairs(dict) do
     table.insert(keys, key)
@@ -155,7 +151,7 @@ function table.keys(dict)
   return keys
 end
 
-function table.values(dict)
+function Table.values(dict)
   local values = {}
   for _, value in pairs(dict) do
     table.insert(values, value)
@@ -163,7 +159,7 @@ function table.values(dict)
   return values
 end
 
-function table.merge(dict, kv)
+function Table.merge(dict, kv)
   local newDict = {}
   for k,v in pairs(dict) do
     newDict[k] = v
@@ -174,7 +170,7 @@ function table.merge(dict, kv)
   return newDict
 end
 
-function table.has_key(dict, key)
+function Table.has_key(dict, key)
   for k,v in pairs(dict) do
     if k == key then
       return true
@@ -187,15 +183,15 @@ end
 ------------------------
 -- Table Extensions
 ------------------------
-function table.is_empty(t)
-  return 0 == table.count(t)
+function Table.is_empty(t)
+  return 0 == Table.count(t)
 end 
 
-function table.count(t)
-  return #table.keys(t)
+function Table.count(t)
+  return #Table.keys(t)
 end
 
-function table.to_a(t)
+function Table.to_a(t)
   local ary = {}
   for k,v in pairs(t) do
     if "string" == type(k) then
