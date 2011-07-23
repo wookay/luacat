@@ -4,15 +4,16 @@
 package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 require 'ObjectExt'
+require 'Logger'
 
 function test_extends()
-  A = extends(Object)
+  local A = extends(Object)
   function A.func_a(self)
     return 10
   end
   assert_nil(Object.superclass)
   assert_equal(Object, A.superclass)
-  a = A.new()
+  local a = A.new()
   a.name = 'a name'
   assert_equal(A, a.class)
   assert_equal(A.mt, getmetatable(a))
@@ -24,15 +25,30 @@ function test_extends()
   assert_equal(A, a.class)
   assert_equal(2, a.func_a())
 
-  B = extends(A)
+  local B = extends(A)
   assert_equal(A, B.superclass)
-  b = B.new()
+  local b = B.new()
   assert_equal(B, b.class)
   assert_equal(10, b.func_a())
   function b.func_a(self)
     return 3
   end
   assert_equal(3, b.func_a())
+end
+
+
+function test_initialize()
+  local A = extends(Object)
+  function A.initialize(self)
+    self.counter = 0
+  end
+  function A.plus(self)
+    self.counter = self.counter + 1
+  end
+  local a = A.new()
+  assert_equal(0, a.counter)
+  a.plus()
+  assert_equal(1, a.counter)
 end
 
 

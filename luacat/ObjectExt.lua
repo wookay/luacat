@@ -2,18 +2,17 @@
 --                           wookay.noh at gmail.com 
 
 
+local inspect = require 'inspect'
+
+
 function extends(superclass)
   local klass = { }
   klass.superclass = superclass
   klass.mt = {
-    __newindex = function(self, name, value)
-      self.__value[name] = value
-    end,
     __index = function(self, name)
       if 'class' == name then
         return klass
-      end
-      if "nil" ~= self.__type and 'table' == type(self.__value) then
+      elseif "nil" ~= self.__type and 'table' == type(self.__value) then
         for k,v in pairs(self.__value) do
           if k == name then
             return v
@@ -38,10 +37,16 @@ function extends(superclass)
     end,
   }
   klass.new = function()
-    return new_object({}, klass.mt, '')
+    local initialize = klass.initialize
+    local obj = {}
+    if 'function' == type(initialize) then
+      initialize(obj)
+    end 
+    return new_object(obj, klass.mt, 'object')
   end
   return klass
 end
+
 
 Object = { mt = {} }
 Number = extends(Object)
@@ -50,6 +55,7 @@ Table = extends(Object)
 Nil = extends(Object)
 Boolean = extends(Object)
 Function = extends(Object)
+
 
 function new_object(value, mt, objType)
   local valueTable = { __type = objType, __value = value}
@@ -78,6 +84,7 @@ end
 function is_not_nil(obj)
   return nil ~= obj
 end
+
 
 
 Object.is_nil = function(self)
