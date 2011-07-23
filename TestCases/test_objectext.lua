@@ -22,7 +22,6 @@ function test_extends()
   function a.func_a(self)
     return 'a'
   end
-  assert_equal(A, a.class)
   assert_equal('a', a.func_a())
 
   local B = extends(A)
@@ -40,10 +39,10 @@ function test_extends()
   local c = C.new()
   assert_equal(C, c.class)
   assert_equal('A', c.func_a())
-  function b.func_a(self)
-    return 'b'
+  function c.func_a(self)
+    return 'c'
   end
-  assert_equal('b', b.func_a())
+  assert_equal('c', c.func_a())
 end
 
 
