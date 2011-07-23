@@ -62,5 +62,5 @@ OOP
 
 Extensions
 ----------
-String, Table, Number, Date extensions
+String, Table, Number, Date extensions.
 see TestCases.
