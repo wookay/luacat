@@ -1,7 +1,6 @@
 -- NumberExt.lua
 --                           wookay.noh at gmail.com 
 
-require 'ObjectExt'
 
 PI = math.pi
 FF = 255

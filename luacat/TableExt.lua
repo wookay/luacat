@@ -8,36 +8,36 @@ require 'ObjectExt'
 -- Array Extensions
 -------------------
 
-function Table.join(array, sep)
-  return table.concat(array, sep)
+function Table.join(self, sep)
+  return table.concat(self, sep)
 end
 
-function Table.push(array, e)
-  table.insert(array, e)
-  return array
+function Table.push(self, e)
+  table.insert(self, e)
+  return self
 end
 
-function Table.pop(array)
-  local count = #array
+function Table.pop(self)
+  local count = #self
   if 0 == count then
     return nil
   else
-    local e = array[count]
-    table.remove(array, count)
+    local e = self[count]
+    table.remove(self, count)
     return e
   end
 end
 
-function Table.reverse(array)
+function Table.reverse(self)
   local ary = {}
-  for idx = #array, 1, -1 do
-    table.insert(ary, array[idx])
+  for idx = #self, 1, -1 do
+    table.insert(ary, self[idx])
   end
   return ary
 end
 
-function Table.index(array, obj)
-  for idx,e in ipairs(array) do
+function Table.index(self, obj)
+  for idx,e in ipairs(self) do
     if e == obj then
       return idx
     end
@@ -46,58 +46,58 @@ function Table.index(array, obj)
 end
 
 -- http://penlight.luaforge.net/
-function Table.slice(array, first, last)
-  local sz = #array
+function Table.slice(self, first, last)
+  local sz = #self
   --if not first then first=1 end
   if first < 0 then first=sz+first+1 end
   if not last then last=sz end
   if last < 0 then last=sz+1+last end
   local res={}
   for i = first, last do
-    table.insert(res, array[i])
+    table.insert(res, self[i])
   end
   return res
 end
 
-function Table.at(array, idx)
+function Table.at(self, idx)
   if idx > 0 then
-    return array[idx]
+    return self[idx]
   else
-    return Table.slice(array, idx, idx)[1]
+    return Table.slice(self, idx, idx)[1]
   end
 end
 
-function Table.map(array, fun)
+function Table.map(self, fun)
   local ary = {}
-  for _,e in pairs(array) do
+  for _,e in pairs(self) do
     table.insert(ary, fun(e))
   end 
   return ary
 end
 
-function Table.map_with_index(array, fun)
+function Table.map_with_index(self, fun)
   local ary = {}
-  for idx,e in ipairs(array) do
+  for idx,e in ipairs(self) do
     table.insert(ary, fun(e, idx))
   end 
   return ary
 end
 
-function Table.each(array, fun)
-  for _,e in pairs(array) do
+function Table.each(self, fun)
+  for _,e in pairs(self) do
     fun(e)
   end
 end
 
-function Table.each_with_index(array, fun)
-  for idx,e in ipairs(array) do
+function Table.each_with_index(self, fun)
+  for idx,e in ipairs(self) do
     fun(e,idx)
   end
 end
 
-function Table.select(array, fun)
+function Table.select(self, fun)
   local ary = {}
-  for _,e in pairs(array) do
+  for _,e in pairs(self) do
     if fun(e) then
       table.insert(ary, e)
     end
@@ -105,9 +105,9 @@ function Table.select(array, fun)
   return ary
 end
 
-function Table.reject(array, fun)
+function Table.reject(self, fun)
   local ary = {}
-  for _,e in pairs(array) do
+  for _,e in pairs(self) do
     if not fun(e) then
       table.insert(ary, e)
     end
@@ -115,23 +115,22 @@ function Table.reject(array, fun)
   return ary
 end
 
-function Table.reduce(array, init, fun)
+function Table.reduce(self, init, fun)
   local result = init
-  for _,e in pairs(array) do
+  for _,e in pairs(self) do
     result = fun(result, e)
   end
   return result
 end
 
-local builtinsort = table.sort
-function Table.sort(array, ...)
-  local ary = Table.to_a(array)
-  builtinsort(ary, ...)
+function Table.sort(self, ...)
+  local ary = Table.to_a(self)
+  table.sort(ary, ...)
   return ary
 end
 
-function Table.include(array, element)
-  for _,e in pairs(array) do
+function Table.include(self, element)
+  for _,e in pairs(self) do
     if e == element then
       return true
     end
@@ -145,35 +144,35 @@ end
 -- Dictionary Extensions
 ------------------------
 
-function Table.keys(dict)
+function Table.keys(self)
   local keys = {}
-  for key, _ in pairs(dict) do
+  for key, _ in pairs(self) do
     table.insert(keys, key)
   end
   return keys
 end
 
-function Table.values(dict)
+function Table.values(self)
   local values = {}
-  for _, value in pairs(dict) do
+  for _, value in pairs(self) do
     table.insert(values, value)
   end
   return values
 end
 
-function Table.merge(dict, kv)
-  local newDict = {}
-  for k,v in pairs(dict) do
-    newDict[k] = v
+function Table.merge(self, kv)
+  local dict = {}
+  for k,v in pairs(self) do
+    dict[k] = v
   end
   for k,v in pairs(kv) do
-    newDict[k] = v
+    dict[k] = v
   end
-  return newDict
+  return dict
 end
 
-function Table.has_key(dict, key)
-  for k,v in pairs(dict) do
+function Table.has_key(self, key)
+  for k,v in pairs(self) do
     if k == key then
       return true
     end

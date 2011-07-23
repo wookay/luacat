@@ -91,17 +91,17 @@ end
 
 
 
-Object.is_nil = function(self)
+function Object.is_nil(self)
   return is_nil(self)
 end
 
-Object.is_not_nil = function(self)
+function Object.is_not_nil(self)
   return is_not_nil(self)
 end
 
-function Object.methods(obj)
+function Object.methods(self)
   local ary = {}
-  for k,v in pairs(obj) do
+  for k,v in pairs(self) do
     if "function" == type(v) then
       table.insert(ary, k)
     end
@@ -109,6 +109,6 @@ function Object.methods(obj)
   return ary
 end
 
-function Object.method(obj, method)
-  return obj[method]
+function Object.method(self, method)
+  return self[method]
 end

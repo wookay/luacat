@@ -7,7 +7,30 @@ local ONE_DAY_HOURS      = 24
 
 Date = extends(Object)
 
+local function _new_date(time)
+  local date = os.date("*t", time)
+  date.time = time
+  return new_object(date, Date.mt, 'date')
+end
 
+-- instance methods
+function Date.yesterday(self)
+  return _new_date(self.time - ONE_DAY_SECONDS)
+end
+
+function Date.tomorrow(self)
+  return _new_date(self.time + ONE_DAY_SECONDS)
+end
+
+function Date.before(self, time_interval)
+  return _new_date(self.time - time_interval)
+end
+
+function Date.after(self, time_interval)
+  return _new_date(self.time + time_interval)
+end
+
+-- time interval
 function time_interval_to_days(time_interval)
   local seconds = time_interval
   local days, hours, minutes = 0
@@ -26,12 +49,26 @@ function time_interval_to_days(time_interval)
   return { days = days, hours = hours, minutes = minutes, seconds = seconds }
 end
 
-local function _new_date(time)
-  local date = os.date("*t", time)
-  date.time = time
-  return new_object(date, Date.mt, 'date')
+function Number.days(self)
+  return self * ONE_DAY_SECONDS
 end
 
+function Number.hours(self)
+  return self * ONE_HOUR_SECONDS
+end
+
+function Number.minutes(self)
+  return self * ONE_MINUTE_SECONDS
+end
+
+function Number.seconds(self)
+  return self
+end
+
+
+
+
+-- class methods
 function Date.new(year, month, day)
   return _new_date(os.time({year=year,month=month,day=day,hour=0,min=0,sec=0}))
 end
@@ -40,43 +77,13 @@ function Date.today()
   return _new_date(os.time())
 end
 
-function Date.yesterday(self)
-  return _new_date(self.time - ONE_DAY_SECONDS)
-end
-
-function Date.tomorrow(self)
-  return _new_date(self.time + ONE_DAY_SECONDS)
-end
-
-function Date.before(self, time_interval)
-  return _new_date(self.time - time_interval)
-end
-
-function Date.after(self, time_interval)
-  return _new_date(self.time + time_interval)
-end
-
-function Number.days(self)
-  return self * ONE_DAY_SECONDS
-end
-
-function Number.hours(self)
-  return self * ONE_HOUR_SECONDS
-end
-function Number.minutes(self)
-  return self * ONE_MINUTE_SECONDS
-end
-function Number.seconds(self)
-  return self
-end
-
 Date.mt.__lt = function(a, b)
   return a.time < b.time
 end
+
 Date.mt.__sub = function(a, b)
   return a.time - b.time
 end
-
 
 
 INFINITY = 0
