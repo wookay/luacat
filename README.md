@@ -18,7 +18,7 @@ if is_main() then
 end
 ```
 
-	$ *lua test_luacat.lua*
+	$ lua test_luacat.lua
 	Started
 	.
 	Finished in 0.0001 seconds.
@@ -63,3 +63,4 @@ OOP
 Extensions
 ----------
 String, Table, Number, Date extensions
+see TestCases.
