@@ -4,8 +4,15 @@
 
 function extends(superclass)
   local klass = { }
+  klass.superclass = superclass
   klass.mt = {
+    __newindex = function(self, name, value)
+      self.__value[name] = value
+    end,
     __index = function(self, name)
+      if 'class' == name then
+        return klass
+      end
       if "nil" ~= self.__type and 'table' == type(self.__value) then
         for k,v in pairs(self.__value) do
           if k == name then
@@ -30,6 +37,9 @@ function extends(superclass)
       return nil
     end,
   }
+  klass.new = function()
+    return new_object({}, klass.mt, '')
+  end
   return klass
 end
 
@@ -41,7 +51,13 @@ Nil = extends(Object)
 Boolean = extends(Object)
 Function = extends(Object)
 
-function Object.new(obj)
+function new_object(value, mt, objType)
+  local valueTable = { __type = objType, __value = value}
+  setmetatable(valueTable, mt)
+  return valueTable
+end
+
+function _(obj)
   local mtMap = {
     boolean = Boolean.mt,
     number = Number.mt,
@@ -52,13 +68,7 @@ function Object.new(obj)
   mtMap['function'] = Function.mt
   local objType = type(obj)
   local mt = mtMap[objType]
-  local valueTable = { __type = objType, __value = obj}
-  setmetatable(valueTable, mt) 
-  return valueTable
-end
-
-function _(obj)
-  return Object.new(obj)
+  return new_object(obj, mt, objType)
 end
 
 function is_nil(obj)
@@ -69,6 +79,7 @@ function is_not_nil(obj)
   return nil ~= obj
 end
 
+
 Object.is_nil = function(self)
   return is_nil(self)
 end
@@ -76,9 +87,6 @@ end
 Object.is_not_nil = function(self)
   return is_not_nil(self)
 end
-
-
-
 
 function Object.methods(obj)
   local ary = {}

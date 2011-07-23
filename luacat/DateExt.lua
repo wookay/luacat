@@ -29,9 +29,7 @@ end
 local function _new_date(time)
   local date = os.date("*t", time)
   date.time = time
-  local valueTable = { __type = 'date', __value = date }
-  setmetatable(valueTable, Date.mt)
-  return valueTable
+  return new_object(date, Date.mt, 'date')
 end
 
 function Date.new(year, month, day)
