@@ -26,12 +26,16 @@ function extends(superclass)
           end 
         end
       end
-      for k,v in pairs(superclass) do
-        if k == name then
-          return function(...)
-            return v(self.__value, ...)
+      local super = superclass
+      while nil ~= super do
+        for k,v in pairs(super) do
+          if k == name then
+            return function(...)
+              return v(self.__value, ...)
+            end
           end
         end
+        super = super.superclass
       end
       return nil
     end,
