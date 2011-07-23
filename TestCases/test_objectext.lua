@@ -43,6 +43,18 @@ function test_extends()
     return 'c'
   end
   assert_equal('c', c.func_a())
+
+  function B.func_a(self)
+    return 'B'
+  end
+  local b2 = B.new()
+  assert_equal('B', b2.func_a())
+
+  function C.func_a(self)
+    return 'C'
+  end
+  local c2 = C.new()
+  assert_equal('C', c2.func_a())
 end
 
 
