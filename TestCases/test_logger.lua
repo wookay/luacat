@@ -10,8 +10,7 @@ log_info( 123 )
 log_info( "abc" )
 log_info( {1, 2, 3} )
 log_info( {a = 1, b = 2} )
-log_info( "test 1 : %d", 1 )
-log_info( "test \"abc\" : %s", "abc" )
+log_info( "test %d %s", 123, "abc")
 log_info( "test nil : %s", to_s(nil) )
 log_info( "test {1} : %s", {1} )
 log_info( "test {a=1} {b=2} : %s %s", {a=1}, {b=2})
@@ -25,12 +24,11 @@ test_logger.lua:9       123
 test_logger.lua:10      abc
 test_logger.lua:11      {1, 2, 3}
 test_logger.lua:12      {a = 1, b = 2}
-test_logger.lua:13      test 1 : 1
-test_logger.lua:14      test "abc" : abc
-test_logger.lua:15      test nil : nil
-test_logger.lua:16      test {1} : {1}
-test_logger.lua:17      test {a=1} {b=2} : {a = 1} {b = 2}
-test_logger.lua:18      { a = 1, 
+test_logger.lua:13      test 123 abc
+test_logger.lua:14      test nil : nil
+test_logger.lua:15      test {1} : {1}
+test_logger.lua:16      test {a=1} {b=2} : {a = 1} {b = 2}
+test_logger.lua:17      { a = 1, 
   b = 2, 
   c = 3, 
   d = 4, 

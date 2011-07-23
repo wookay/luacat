@@ -11,6 +11,7 @@ require 'test_dateext'
 require 'test_exception'
 require 'test_metatable'
 require 'test_unittest'
+require 'test_luacat'
 
 
 if is_main() then
