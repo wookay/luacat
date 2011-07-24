@@ -51,12 +51,12 @@ OOP
   function A.initialize(self)
     self.counter = 0
   end
-  function A.plus(self)
+  function A.plus_one(self)
     self.counter = self.counter + 1
   end
   local a = A.new()
   assert_equal(0, a.counter)
-  a.plus()
+  a.plus_one()
   assert_equal(1, a.counter)
 ```
 

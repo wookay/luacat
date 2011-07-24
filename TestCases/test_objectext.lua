@@ -63,13 +63,31 @@ function test_initialize()
   function A.initialize(self)
     self.counter = 0
   end
-  function A.plus(self)
+  function A.plus_one(self)
     self.counter = self.counter + 1
   end
   local a = A.new()
   assert_equal(0, a.counter)
-  a.plus()
+  a.plus_one()
   assert_equal(1, a.counter)
+end
+
+function test_initialize_with_arguments()
+  local A = extends(Object)
+  function A.initialize(self, init)
+    self.counter = init
+  end
+  function A.plus_one(self)
+    self.counter = self.counter + 1
+  end
+  local a = A.new(5)
+  local b = A.new(5)
+  assert_equal(5, a.counter)
+  a.plus_one()
+  assert_equal(6, a.counter)
+  assert_equal(5, b.counter)
+  b.plus_one()
+  assert_equal(6, b.counter)
 end
 
 

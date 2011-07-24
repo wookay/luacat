@@ -40,11 +40,11 @@ function extends(superclass)
       return nil
     end,
   }
-  klass.new = function()
+  klass.new = function(...)
     local initialize = klass.initialize
     local obj = {}
     if 'function' == type(initialize) then
-      initialize(obj)
+      initialize(obj, ...)
     end 
     return new_object(obj, klass.mt, 'object')
   end
