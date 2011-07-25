@@ -6,6 +6,7 @@ inspect = require 'inspect'
 require 'ObjectExt'
 require 'TableExt'
 require 'Exception'
+require 'StringExt'
 
 local function _extract_filename_line_for_log_info(traceback)
   return _(_(_(traceback).

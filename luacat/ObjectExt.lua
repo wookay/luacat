@@ -6,7 +6,7 @@ local inspect = require 'inspect'
 
 
 function extends(superclass)
-  local klass = { }
+  local klass = { __type = 'class' }
   klass.superclass = superclass
   klass.mt = {
     __index = function(self, name)
@@ -101,7 +101,17 @@ end
 
 function Object.methods(self)
   local ary = {}
-  for k,v in pairs(self) do
+  local klass = nil
+  if 'table' == type(self) and nil ~= self.__type then
+    if 'class' == self.__type then
+      klass = self
+    else
+      klass = self.class
+    end
+  else
+    klass = _(self).class
+  end
+  for k,v in pairs(klass) do
     if "function" == type(v) then
       table.insert(ary, k)
     end

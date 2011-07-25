@@ -71,6 +71,8 @@ function test_array()
 
   assert_equal(5, Table.count({1,2,3,3,5}))
   assert_equal(2, Table.count({1,2,3,3,5}, 3))
+
+  assert_one_of(_({}).methods(), 'count')
 end
 
 

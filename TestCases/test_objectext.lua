@@ -103,17 +103,18 @@ function test_object()
   assert_true(is_nil(nil))
   assert_true(is_not_nil(0))
 
-  local obj = {}
-  function obj.func()
+  local klass = extends(Object)
+  function klass.func()
     return 1
   end
-  function obj.func2()
+  function klass.func2()
     return 2
   end
-  assert_equal({"func", "func2"}, Object.methods(obj))
-  assert_equal({"func", "func2"}, _(obj).methods())
-  assert_equal(obj.func, Object.method(obj, "func"))
-  assert_equal(1, Object.method(obj, "func")())
+  assert_equal({"func2", "func", "new"}, Object.methods(klass))
+  assert_equal({"func2", "func", "new"}, _(klass).methods())
+  assert_equal(klass.func, _(klass).method('func'))
+  assert_equal(klass.func, Object.method(klass, 'func'))
+  assert_equal(1, Object.method(klass, 'func')())
 end
 
 

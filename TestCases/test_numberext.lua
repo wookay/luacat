@@ -24,6 +24,8 @@ function test_number()
   assert_false(is_odd(2))
   assert_true(is_odd(3))
 
+  assert_one_of(_(1).methods(), 'is_odd')
+
   local random = get_random(2)
   assert_true(0 <= random)
 end

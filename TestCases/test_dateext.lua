@@ -42,6 +42,8 @@ function test_date()
   assert_equal(_(60).minutes(), _(1).hours())
   assert_equal(_(60).seconds(), _(1).minutes())
 
+  assert_one_of(_(date).methods(), 'today')
+  assert_one_of(_(date).methods(), 'yesterday')
 end
 
 

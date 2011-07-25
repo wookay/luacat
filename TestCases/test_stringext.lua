@@ -50,6 +50,10 @@ function test_string()
   assert_equal(2, String.count("hello", "l"))
   assert_equal(1, String.count("hello", "ll"))
   assert_equal(0, String.count("hello", "lll"))
+
+  assert_false(_("").is_nil())
+  assert_true(_("").is_not_nil())
+  assert_one_of(_("").methods(), 'split')
 end
 
 function test_to_s()
