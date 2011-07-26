@@ -64,3 +64,9 @@ Extensions
 ----------
 String, Table, Number, Date extensions.
 see TestCases.
+
+
+
+Feedback
+--------
+ * Subscribe to google groups <http://groups.google.com/group/luacat>
