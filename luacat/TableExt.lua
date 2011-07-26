@@ -12,6 +12,14 @@ function Table.join(self, sep)
   return table.concat(self, sep)
 end
 
+function Table.concat(self, other)
+  local ary = self
+  for k,v in pairs(other) do
+    table.insert(ary, v)
+  end
+  return ary
+end
+
 function Table.push(self, e)
   table.insert(self, e)
   return self

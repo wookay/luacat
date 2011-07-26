@@ -73,6 +73,10 @@ function test_array()
   assert_equal(2, Table.count({1,2,3,3,5}, 3))
 
   assert_one_of(_({}).methods(), 'count')
+
+  local a = {1,2}
+  assert_equal({1,2,3,4}, Table.concat(a, {3,4}))
+  assert_equal({1,2,3,4}, a)
 end
 
 
