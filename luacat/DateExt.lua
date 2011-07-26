@@ -14,11 +14,11 @@ local function _new_date(time)
 end
 
 -- instance methods
-function Date.yesterday(self)
+function Date.getYesterday(self)
   return _new_date(self.time - ONE_DAY_SECONDS)
 end
 
-function Date.tomorrow(self)
+function Date.getTomorrow(self)
   return _new_date(self.time + ONE_DAY_SECONDS)
 end
 
@@ -49,19 +49,19 @@ function time_interval_to_days(time_interval)
   return { days = days, hours = hours, minutes = minutes, seconds = seconds }
 end
 
-function Number.days(self)
+function Number.getDays(self)
   return self * ONE_DAY_SECONDS
 end
 
-function Number.hours(self)
+function Number.getHours(self)
   return self * ONE_HOUR_SECONDS
 end
 
-function Number.minutes(self)
+function Number.getMinutes(self)
   return self * ONE_MINUTE_SECONDS
 end
 
-function Number.seconds(self)
+function Number.getSeconds(self)
   return self
 end
 

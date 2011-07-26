@@ -15,15 +15,15 @@ function test_date()
   assert_equal(0, date.min)
   assert_equal(0, date.sec)
 
-  local yesterday = date.yesterday()
+  local yesterday = date.yesterday
   assert_equal(2009, yesterday.year)
   assert_equal(12, yesterday.month)
   assert_equal(31, yesterday.day)
 
-  assert_equal(date, yesterday.tomorrow())
-  assert_equal(86400, _(1).days())
-  assert_equal(yesterday, date.before(_(1).days()))
-  assert_equal(date, yesterday.after(_(1).days()))
+  assert_equal(date, yesterday.tomorrow)
+  assert_equal(86400, _(1).days)
+  assert_equal(yesterday, date.before(_(1).days))
+  assert_equal(date, yesterday.after(_(1).days))
 
   local today = Date.today()
   local diff = today - date
@@ -38,12 +38,12 @@ function test_date()
   assert_false(date == today)
   assert_true(date ~= today)
 
-  assert_equal(_(24).hours(), _(1).days())
-  assert_equal(_(60).minutes(), _(1).hours())
-  assert_equal(_(60).seconds(), _(1).minutes())
+  assert_equal(_(24).hours, _(1).days)
+  assert_equal(_(60).minutes, _(1).hours)
+  assert_equal(_(60).seconds, _(1).minutes)
 
   assert_one_of(_(date).methods(), 'today')
-  assert_one_of(_(date).methods(), 'yesterday')
+  assert_one_of(_(date).methods(), 'before')
 end
 
 
