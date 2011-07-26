@@ -9,7 +9,19 @@ function extends(superclass)
   local klass = { __type = 'class' }
   klass.superclass = superclass
   klass.mt = {
+    __newindex = function(self, name, ...)
+      local setterName = 'set' .. String.capitalize(name)
+      local setter = klass[setterName]
+      if nil ~= setter then
+        setter(self.__value, ...)
+      else
+        self.__value[name] = ...
+      end
+      return nil
+    end,
+
     __index = function(self, name)
+
       if 'class' == name then
         return klass
       elseif "nil" ~= self.__type and 'table' == type(self.__value) then
@@ -19,6 +31,13 @@ function extends(superclass)
           end
        end
       end
+      
+      local getterName = 'get' .. String.capitalize(name)
+      local getter = klass[getterName]
+      if nil ~= getter then
+        return getter(self.__value)
+      end
+
       for k,v in pairs(klass) do
         if k == name then
           return function(...) 

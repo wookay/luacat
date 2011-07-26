@@ -28,6 +28,10 @@ function test_string()
   assert_equal("ABC", String.upcase("abc"))
   assert_equal("abc", String.downcase("ABC"))
 
+  assert_equal("", String.capitalize(""))
+  assert_equal("A", String.capitalize("a"))
+  assert_equal("Abc", String.capitalize("abc"))
+
   assert_equal("abc def", SWF("abc %s", "def"))
   assert_equal("0xff", SWF("0x%x", 255))
 

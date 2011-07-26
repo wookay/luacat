@@ -136,6 +136,18 @@ function test_import()
   assert_false(Color.is_red({0,255,0}))
 end
 
+function test_getter_setter()
+  local A = extends(Object)
+  function A.getColor(self)
+    return self._color
+  end
+  function A.setColor(self, color)
+    self._color = Table.concat(color, {255})
+  end
+  local a = A.new()
+  a.color = {0,0,0}
+  assert_equal({0,0,0,255}, a.color)
+end
 
 if is_main() then 
   UnitTest.run()

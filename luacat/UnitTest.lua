@@ -5,6 +5,7 @@ local inspect = require 'inspect'
 require 'Exception'
 require 'StringExt'
 require 'TableExt'
+require 'ObjectExt'
 
 local currentTest = nil
 UnitTest = { dot_if_passed = false, tests = {}, passed = 0, failed = 0, setupAt = nil }
@@ -84,13 +85,13 @@ function assert_raise(exception, fun)
   function(e) _assert_equal(true, String.include(e, exception), exception, e) end)
 end
 
-function UnitTest:setup()
+function UnitTest.setup()
   UnitTest.setupAt = os.clock()
   UnitTest.dot_if_passed = true
   print("Started")
 end
 
-function UnitTest:report()
+function UnitTest.report()
   if Table.count(UnitTest.tests) > 0 then
     print(string.format("\nFinished in %.4f seconds.", os.clock() - UnitTest.setupAt))
     print(string.format("%d tests, %d assertions, %d failures, %d errors",
@@ -102,25 +103,33 @@ function UnitTest:report()
 end
 
 local TEST_PREFIX = 'test_'
-function UnitTest:run()
+function UnitTest.run(test_fun)
   local didSetup = false
-  for key,func in pairs(getfenv()) do
-    if String.start_with(key, TEST_PREFIX) then
-      if not didSetup then
-        didSetup = true
-        UnitTest:setup()
+  local tests = {}
+  if nil == test_fun then
+    for key,func in pairs(getfenv()) do
+      if String.start_with(key, TEST_PREFIX) then
+        tests[key] = func 
       end
-      UnitTest.tests[key] = {
-        test = func,
-        passed = 0,
-        failed = 0,
-      }
-      currentTest = key
-      func()
-      currentTest = nil
     end
+  else
+    tests['test'] = test_fun
   end
-  UnitTest:report()
+  for key,func in pairs(tests) do
+    if not didSetup then
+      didSetup = true
+      UnitTest.setup()
+    end
+    UnitTest.tests[key] = {
+      test = func,
+      passed = 0,
+      failed = 0,
+    }
+    currentTest = key
+    func()
+    currentTest = nil
+  end
+  UnitTest.report()
 end
 
 

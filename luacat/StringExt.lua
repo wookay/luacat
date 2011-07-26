@@ -50,6 +50,13 @@ function String.downcase(self)
   return string.lower(self)
 end
 
+function String.capitalize(self)
+  if #self > 0 then
+    return string.upper(string.sub(self, 1, 1)) .. string.sub(self, 2, -1)
+  else
+    return ''
+  end
+end
 
 local PLAIN = true
 function String.start_with(self, prefix)

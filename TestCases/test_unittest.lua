@@ -24,5 +24,5 @@ end
 
 
 if is_main() then
-  UnitTest:run()
+  UnitTest.run()
 end
