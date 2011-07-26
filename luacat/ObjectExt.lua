@@ -48,6 +48,12 @@ function extends(superclass)
     end 
     return new_object(obj, klass.mt, 'object')
   end
+  klass.import = function(dict, fun)
+    local func = fun or function(k,v) return v end
+    for k,v in pairs(dict) do
+      klass[k] = func(k,v)
+    end
+  end
   return klass
 end
 

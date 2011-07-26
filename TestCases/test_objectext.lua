@@ -91,8 +91,7 @@ function test_initialize_with_arguments()
 end
 
 
-function test_object()
-
+function test_is_nil()
   assert_true(_(nil).is_nil())
   assert_false(_(nil).is_not_nil())
   assert_false(_(0).is_nil())
@@ -102,7 +101,9 @@ function test_object()
   assert_not_nil(not nil)
   assert_true(is_nil(nil))
   assert_true(is_not_nil(0))
+end
 
+function test_methods()
   local klass = extends(Object)
   function klass.func()
     return 1
@@ -110,11 +111,29 @@ function test_object()
   function klass.func2()
     return 2
   end
-  assert_equal({"func2", "func", "new"}, Object.methods(klass))
-  assert_equal({"func2", "func", "new"}, _(klass).methods())
+  assert_one_of(Object.methods(klass), 'func')
+  assert_one_of(_(klass).methods(), 'func')
   assert_equal(klass.func, _(klass).method('func'))
   assert_equal(klass.func, Object.method(klass, 'func'))
   assert_equal(1, Object.method(klass, 'func')())
+end
+
+function test_import()
+  local Color = extends(Object)
+  local colorMap = {
+    red = {255, 0, 0},
+    green = {0, 255, 0},
+    blue = {0, 0, 255},
+    is_red = function(rgb)
+      return Table.equal({255,0,0}, rgb)
+    end
+  }
+  Color.import(colorMap)
+  assert_equal({255,0,0}, Color.red)
+  assert_equal({0,255,0}, Color.green)
+  assert_equal({0,0,255}, Color.blue)
+  assert_true(Color.is_red({255,0,0}))
+  assert_false(Color.is_red({0,255,0}))
 end
 
 

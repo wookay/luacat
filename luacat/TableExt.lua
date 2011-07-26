@@ -214,3 +214,7 @@ function Table.to_a(self)
   end
   return ary
 end
+
+function Table.equal(a, b)
+  return inspect(a) == inspect(b)
+end
