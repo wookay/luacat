@@ -134,5 +134,9 @@ end
 
 
 function is_main()
-  return arg[0] == string.sub(debug.getinfo(2,'S').source,2)
+  if nil == arg then
+    return false
+  else
+    return arg[0] == string.sub(debug.getinfo(2,'S').source,2)
+  end
 end
