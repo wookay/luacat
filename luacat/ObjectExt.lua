@@ -5,17 +5,35 @@
 local inspect = require 'inspect'
 
 
+local function _find_method_by_name(name, klass, superclass)
+  local method = klass[name]
+  if nil == method then
+    local super = superclass
+    while nil ~= super do
+      for k,v in pairs(super) do
+        if k == name then
+          return v
+        end
+      end
+      super = super.superclass
+    end
+  else
+    return method
+  end
+  return nil
+end
+
 function extends(superclass)
   local klass = { __type = 'class' }
   klass.superclass = superclass
   klass.mt = {
     __newindex = function(self, name, ...)
       local setterName = 'set' .. String.capitalize(name)
-      local setter = klass[setterName]
-      if nil ~= setter then
-        setter(self.__value, ...)
-      else
+      local setter = _find_method_by_name(setterName, klass, superclass)
+      if nil == setter then
         self.__value[name] = ...
+      else
+        setter(self.__value, ...)
       end
       return nil
     end,
@@ -33,28 +51,14 @@ function extends(superclass)
       end
       
       local getterName = 'get' .. String.capitalize(name)
-      local getter = klass[getterName]
-      if nil ~= getter then
+      local getter = _find_method_by_name(getterName, klass, superclass)
+      if nil == getter then
+        local method = _find_method_by_name(name, klass, superclass)
+        if nil ~= method then
+          return function(...) return method(self.__value, ...) end
+        end
+      else
         return getter(self.__value)
-      end
-
-      for k,v in pairs(klass) do
-        if k == name then
-          return function(...) 
-            return v(self.__value, ...)
-          end 
-        end
-      end
-      local super = superclass
-      while nil ~= super do
-        for k,v in pairs(super) do
-          if k == name then
-            return function(...)
-              return v(self.__value, ...)
-            end
-          end
-        end
-        super = super.superclass
       end
       return nil
     end,

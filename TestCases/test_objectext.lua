@@ -147,6 +147,11 @@ function test_getter_setter()
   local a = A.new()
   a.color = {0,0,0}
   assert_equal({0,0,0,255}, a.color)
+
+  local B = extends(A)
+  local b = B.new()
+  b.color = {0,0,1}
+  assert_equal({0,0,1,255}, b.color)
 end
 
 if is_main() then 
