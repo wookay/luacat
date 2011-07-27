@@ -82,6 +82,8 @@ end
 
 
 function test_dictionary()
+  assert_equal({}, {a,b,c})
+
   local dict = { a = 'apple', b = 'banana' }
   assert_equal({'a','b'}, Table.keys(dict))
   assert_equal({'apple','banana'}, Table.values(dict))

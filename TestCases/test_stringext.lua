@@ -58,6 +58,8 @@ function test_string()
   assert_false(_("").is_nil())
   assert_true(_("").is_not_nil())
   assert_one_of(_("").methods(), 'split')
+
+  assert_equal("apple", String.gsub("abc", "bc", "pple"))
 end
 
 function test_to_s()

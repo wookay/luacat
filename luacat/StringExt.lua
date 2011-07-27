@@ -139,3 +139,7 @@ end
 function String.rstrip(self)
   return _strip(self, false, true)
 end
+
+function String.gsub(self, from, to)
+  return string.gsub(self, from, to)
+end
