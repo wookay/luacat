@@ -64,7 +64,7 @@ function extends(superclass)
     end,
   }
   klass.new = function(...)
-    local initialize = klass.initialize
+    local initialize = _find_method_by_name('initialize', klass, superclass)
     local obj = {}
     if 'function' == type(initialize) then
       initialize(obj, ...)

@@ -81,13 +81,23 @@ function test_initialize_with_arguments()
     self.counter = self.counter + 1
   end
   local a = A.new(5)
-  local b = A.new(5)
+  local a2 = A.new(5)
   assert_equal(5, a.counter)
   a.plus_one()
   assert_equal(6, a.counter)
+  assert_equal(5, a2.counter)
+  a2.plus_one()
+  assert_equal(6, a2.counter)
+end
+
+function test_subclass_initialize_with_arguments()
+  local A = extends(Object)
+  function A.initialize(self, init)
+    self.counter = init
+  end
+  local B = extends(A)
+  local b = B.new(5)
   assert_equal(5, b.counter)
-  b.plus_one()
-  assert_equal(6, b.counter)
 end
 
 
