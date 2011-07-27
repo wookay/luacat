@@ -75,51 +75,11 @@ function Table.at(self, idx)
   end
 end
 
-function Table.map(self, fun)
-  local ary = {}
-  for _,e in pairs(self) do
-    table.insert(ary, fun(e))
-  end 
-  return ary
-end
-
 function Table.map_with_index(self, fun)
   local ary = {}
   for idx,e in ipairs(self) do
     table.insert(ary, fun(e, idx))
   end 
-  return ary
-end
-
-function Table.each(self, fun)
-  for _,e in pairs(self) do
-    fun(e)
-  end
-end
-
-function Table.each_with_index(self, fun)
-  for idx,e in ipairs(self) do
-    fun(e,idx)
-  end
-end
-
-function Table.select(self, fun)
-  local ary = {}
-  for _,e in pairs(self) do
-    if fun(e) then
-      table.insert(ary, e)
-    end
-  end
-  return ary
-end
-
-function Table.reject(self, fun)
-  local ary = {}
-  for _,e in pairs(self) do
-    if not fun(e) then
-      table.insert(ary, e)
-    end
-  end
   return ary
 end
 
@@ -188,6 +148,24 @@ function Table.has_key(self, key)
   return false
 end
 
+function Table.assoc(self, key)
+  for k,v in pairs(self) do
+    if k == key then
+      return {k,v}
+    end
+  end 
+  return nil
+end
+
+function Table.rassoc(self, value)
+  for k,v in pairs(self) do
+    print(k)
+    if v == value then
+      return {k,v}
+    end
+  end 
+  return nil
+end
 
 
 ------------------------
@@ -225,4 +203,62 @@ end
 
 function Table.equal(a, b)
   return inspect(a) == inspect(b)
+end
+
+function Table.each(self, fun)
+  for k,e in pairs(self) do
+    if "number" == type(k) then fun(e) else fun({k,e}) end
+  end
+end
+
+function Table.each_with_index(self, fun)
+  local idx = 1
+  for k,e in pairs(self) do
+    if "number" == type(k) then fun(e,idx) else fun({k,e},idx) end
+    idx = idx + 1
+  end
+end
+
+function Table.map(self, fun)
+  local ary = {}
+  for k,e in pairs(self) do
+    if "number" == type(k) then
+      table.insert(ary, fun(e))
+    else
+      table.insert(ary, fun(k,e))
+    end
+  end 
+  return ary
+end
+
+function Table.select(self, fun)
+  local ary = {}
+  for k,e in pairs(self) do
+    if "number" == type(k) then
+      if fun(e) then
+        table.insert(ary, e)
+      end
+    else
+      if fun(k,e) then
+        table.insert(ary, {k,e})
+      end
+    end
+  end
+  return ary
+end
+
+function Table.reject(self, fun)
+  local ary = {}
+  for k,e in pairs(self) do
+    if "number" == type(k) then
+      if not fun(e) then
+        table.insert(ary, e)
+      end
+    else
+      if not fun(k,e) then
+        table.insert(ary, {k,e})
+      end
+    end
+  end
+  return ary
 end

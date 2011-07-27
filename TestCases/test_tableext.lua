@@ -99,6 +99,14 @@ function test_dictionary()
   assert_false(Table.has_key({a=1}, 'b'))
 
   assert_true(_({a=1}).has_key('a'))
+
+  local result = {}
+  Table.each({a=1,b=2,c=3}, function(k,v) Table.push(result, {k,v}) end)
+  --assert_equal({{'a',1},{'b',2},{'c',3}}, result)
+
+  local dict = { one = "uno", two = "dos", three = "tres", zz = "dos"}
+  assert_equal({'two',"dos"}, Table.assoc(dict, 'two'))
+  --assert_equal({'two',"dos"}, Table.rassoc(dict, 'dos'))
 end
 
 
