@@ -26,8 +26,8 @@ end
 -- String Extensions
 --------------------
 
-function String.is_empty(str)
-  return 0 == #str
+function String.is_empty(self)
+  return 0 == #self
 end
 
 function String.slice(self, from, to)

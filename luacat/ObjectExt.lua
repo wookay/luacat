@@ -33,7 +33,11 @@ function extends(superclass)
       if nil == setter then
         self.__value[name] = ...
       else
-        setter(self.__value, ...)
+        if is_base_type(self.__type) then
+          setter(self.__value, ...)
+        else
+          setter(self, ...)
+        end
       end
       return nil
     end,
@@ -55,10 +59,18 @@ function extends(superclass)
       if nil == getter then
         local method = _find_method_by_name(name, klass, superclass)
         if nil ~= method then
-          return function(...) return method(self.__value, ...) end
+          if is_base_type(self.__type) then
+            return function(...) return method(self.__value, ...) end
+          else
+            return function(...) return method(self, ...) end
+          end
         end
       else
-        return getter(self.__value)
+        if is_base_type(self.__type) then
+          return getter(self.__value)
+        else
+          return getter(self)
+        end
       end
       return nil
     end,
@@ -78,6 +90,18 @@ function extends(superclass)
     end
   end
   return klass
+end
+
+function is_base_type(t)
+  local baseMap = {
+    boolean = true,
+    number = true,
+    string = true,
+    table = true,
+  }
+  baseMap['nil'] = true
+  baseMap['function'] = true
+  return baseMap[t]
 end
 
 

@@ -164,6 +164,22 @@ function test_getter_setter()
   assert_equal({0,0,1,255}, b.color)
 end
 
+function test_getter_setter_self()
+  local A = extends(Object)
+  function A.three(self)
+    return 3
+  end
+  function A.getNum(self)
+    return self._num + self.three()
+  end
+  function A.setNum(self, n)
+    self._num = n + self.three()
+  end
+  local a = A.new()
+  a.num = 1
+  assert_equal(7, a.num)
+end
+
 if is_main() then 
   UnitTest.run()
 end
