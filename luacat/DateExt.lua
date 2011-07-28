@@ -88,6 +88,10 @@ end
 
 INFINITY = 0
 
-function milliseconds(n)
+Time = extends(Object)
+function Time.milliseconds(n)
   return n
+end
+function Time.seconds(n)
+  return 1000 * n
 end

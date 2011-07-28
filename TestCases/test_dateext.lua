@@ -44,6 +44,11 @@ function test_date()
 
   assert_one_of(_(date).methods(), 'today')
   assert_one_of(_(date).methods(), 'before')
+
+end
+
+function test_time()
+  assert_equal(Time.milliseconds(1000), Time.seconds(1))
 end
 
 
