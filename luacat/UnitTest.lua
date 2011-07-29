@@ -58,6 +58,14 @@ function assert_not_nil(got)
   _assert_equal(true, nil ~= got, "not nil", got)
 end
 
+function assert_not_equal(expected, got)
+  if "table" == type(expected) and "table" == type(got) then
+    _assert_equal(true, inspect(expected) ~= inspect(got), "not equal", got)
+  else
+    _assert_equal(true, expected ~= got, "not equal", got)
+  end
+end
+
 function assert_not_empty(got)
   if "table" == type(got) then
     _assert_equal(false, Table.is_empty(got), "not empty", got)
