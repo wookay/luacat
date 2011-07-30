@@ -89,6 +89,18 @@ function extends(superclass)
       klass[k] = func(k,v)
     end
   end
+  klass.synthesize = function(list, fun)
+    for _,name in pairs(list) do
+      local getterName = 'get' .. String.capitalize(name)
+      local setterName = 'set' .. String.capitalize(name)
+      klass[getterName] = function(self)
+        return fun(self)[name]
+      end
+      klass[setterName] = function(self, val)
+        fun(self)[name] = val
+      end
+    end
+  end
   return klass
 end
 

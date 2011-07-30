@@ -180,6 +180,21 @@ function test_getter_setter_self()
   assert_equal(7, a.num)
 end
 
+function test_synthesize()
+  local A = extends(Object) 
+  function A.initialize(self)
+    self.person = { name = 'Finn', age = 15 }
+  end
+  A.synthesize({'name','age'}, function(self) return self.person end)
+  local a = A.new()
+  assert_equal('Finn', a.person.name)
+  assert_equal('Finn', a.name)
+  a.name = 'Jake'
+  assert_equal('Jake', a.person.name)
+  assert_equal('Jake', a.name)
+  assert_equal(15, a.age)
+end
+
 if is_main() then 
   UnitTest.run()
 end
