@@ -4,11 +4,33 @@
 package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 require 'TableExt'
+require 'Logger'
 
 function test_nil()
   assert_equal(0, #{nil})
   assert_equal({}, {nil})
 end
+
+function test_lua_table()
+  local a = {1,2,3}
+  a[3] = 5
+  a[10] = 5
+  a['b'] = 5
+  a.c = 5
+
+  local cnt = 0
+  for k,v in ipairs(a) do
+    cnt = cnt + 1
+  end
+  assert_equal(3, cnt)
+
+  cnt = 0
+  for k,v in pairs(a) do
+    cnt = cnt + 1
+  end
+  assert_equal(6, cnt)
+end
+
 
 function test_array()
 
