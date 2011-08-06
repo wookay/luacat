@@ -30,6 +30,9 @@ function string_to_float(str)
   end
 end
 
+function float_to_int(num)
+  return math.floor(num)
+end
 
 function Number.is_odd(self)
   return is_odd(self)

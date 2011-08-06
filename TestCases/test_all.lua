@@ -11,8 +11,9 @@ require 'test_dateext'
 require 'test_exception'
 require 'test_metatable'
 require 'test_unittest'
-require 'test_hangul'
 require 'test_luacat'
+
+require 'test_hangul'
 
 
 if is_main() then
