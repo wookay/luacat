@@ -13,6 +13,7 @@ require 'test_metatable'
 require 'test_unittest'
 require 'test_luacat'
 
+require 'test_file'
 require 'test_hangul'
 
 
