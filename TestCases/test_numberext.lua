@@ -30,6 +30,26 @@ function test_number()
   assert_true(0 <= random)
 end
 
+function test_number_block()
+  local ary = {}
+  _(3).times(function(n)
+    table.insert(ary, n)
+  end)
+  assert_equal({1,2,3}, ary)
+
+  local ary = {}
+  _(1).upto(3, function(n)
+    table.insert(ary, n)
+  end)
+  assert_equal({1,2,3}, ary)
+
+  local ary = {}
+  _(3).downto(1, function(n)
+    table.insert(ary, n)
+  end)
+  assert_equal({3,2,1}, ary)
+end
+
 
 
 if is_main() then 

@@ -42,14 +42,53 @@ function Number.chr(self)
   return int_to_char(self)
 end
 
+function Number.times(self, fun)
+  for idx=1, self do
+    fun(idx)
+  end
+  return self
+end
+
+function Number.upto(self, to, fun)
+  for idx=self, to do
+    fun(idx)
+  end
+  return self
+end
+
+function Number.downto(self, to, fun)
+  for idx=self, to, -1 do
+    fun(idx)
+  end
+  return self
+end
+
+
 
 local _socket = nil
-try(function() _socket = require'socket' end, function(e) end)
+try(function() _socket = require 'socket' end, function() end)
+if nil == socket then
+  try(function()
+    require 'luarocks.loader'
+    _socket = require 'socket'
+  end, function()
+    _socket = { gettime = function() return os.time() end }
+  end)
+end
+local _old_time_seed = nil
+local _last_random = math.random(0,100000000000)
 function get_random(num)
-  if is_nil(_socket) then
-    math.randomseed(os.time()*10000000)
-  else
-    math.randomseed(_socket.gettime()*10000)
+  while true do
+    local new_time_seed = _socket.gettime() * 10000 + _last_random
+    if _old_time_seed == new_time_seed then
+    else
+      _old_time_seed = new_time_seed
+      math.randomseed(new_time_seed)
+      _last_random = math.random(0,100000000000)
+      local random = math.random(0,num)
+      --print('seed: ', new_time_seed, 'random :', random)
+      return random
+    end
   end
   return math.random(0,num)
 end

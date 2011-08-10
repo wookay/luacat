@@ -65,6 +65,26 @@ function test_array()
   assert_equal(6, popped)
   assert_equal({1,2,3,4,5}, array)
 
+  local popped = Table.pop(array, 0)
+  assert_equal({}, popped)
+  assert_equal({1,2,3,4,5}, array)
+
+  local popped = Table.pop(array, 1)
+  assert_equal({5}, popped)
+  assert_equal({1,2,3,4}, array)
+
+  local popped = Table.pop(array, 2)
+  assert_equal({3,4}, popped)
+  assert_equal({1,2}, array)
+
+  local popped = Table.pop(array, 3)
+  assert_equal({1,2}, popped)
+  assert_equal({}, array)
+
+  local pushed = Table.push(array, 6,7,8)
+  assert_equal({6,7,8}, pushed)
+  assert_equal({6,7,8}, array)
+
   assert_equal({}, Table.reverse({}))
   assert_equal({2,4,6}, Table.map({1,2,3}, function(x) return x*2 end))
   assert_equal({2,4,6}, Table.map_with_index({1,2,3}, function(x,idx) return x + idx end))
@@ -99,6 +119,21 @@ function test_array()
   local a = {1,2}
   assert_equal({1,2,3,4}, Table.concat(a, {3,4}))
   assert_equal({1,2,3,4}, a)
+
+  local cnt = 0 
+  for idx = 0, 10 do
+    local shuffled_one = Table.shuffle(a)
+    local shuffled_two = Table.shuffle(a)
+    if Table.equal(shuffled_one, shuffled_two) then
+      cnt = cnt + 1
+    end
+  end
+  assert_true(3 > cnt)
+  assert_equal({1,2,3,4}, a)
+
+  Table.clear(a)
+  assert_equal({}, a)
+
 end
 
 
@@ -129,6 +164,9 @@ function test_dictionary()
   local dict = { one = "uno", two = "dos", three = "tres", zz = "dos"}
   assert_equal({'two',"dos"}, Table.assoc(dict, 'two'))
   --assert_equal({'two',"dos"}, Table.rassoc(dict, 'dos'))
+
+  Table.clear(dict)
+  assert_equal({}, dict)
 end
 
 

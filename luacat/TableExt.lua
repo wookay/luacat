@@ -2,6 +2,7 @@
 --                           wookay.noh at gmail.com 
 
 require 'ObjectExt'
+require 'NumberExt'
 
 
 -------------------
@@ -20,21 +21,33 @@ function Table.concat(self, other)
   return ary
 end
 
-function Table.push(self, e)
+function Table.push(self, e, ...)
   table.insert(self, e)
+  for _,v in pairs({...}) do
+    table.insert(self, v)
+  end 
   return self
 end
 
-function Table.pop(self)
+function Table.pop(self, n)
   local count = #self
   if 0 == count then
     return nil
   else
-    local e = self[count]
-    table.remove(self, count)
-    return e
+    if nil == n then
+      local e = self[count]
+      table.remove(self, count)
+      return e
+    else
+      local e = Table.slice(self, count-n+1, count)
+      for idx = 1, n do
+        table.remove(self, count - idx + 1)
+      end
+      return e
+    end
   end
 end
+
 
 function Table.reverse(self)
   local ary = {}
@@ -104,6 +117,22 @@ function Table.include(self, element)
     end
   end
   return false
+end
+
+function Table.shuffle(self)
+  local ary = Table.to_a(self)
+  try(function()
+    table.sort(ary, function(a, b)
+      local random = get_random(2)
+      return 1 < random
+    end)
+  end, function(e)
+  end)
+  if (#self == #ary) then
+    return ary
+  else
+    return Table.shuffle(self)
+  end
 end
 
 
@@ -262,3 +291,10 @@ function Table.reject(self, fun)
   end
   return ary
 end
+
+function Table.clear(self)
+  for key, _ in pairs(self) do
+    self[key] = nil
+  end
+  return self
+end 
