@@ -154,7 +154,13 @@ function is_not_nil(obj)
   return nil ~= obj
 end
 
-
+function Object.mixin(t)
+  local klass = extends(Object) 
+  for k,v in pairs(t) do
+    klass[k] = v
+  end
+  return klass
+end
 
 function Object.is_nil(self)
   return is_nil(self)

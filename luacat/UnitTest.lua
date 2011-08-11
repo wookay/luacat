@@ -111,32 +111,51 @@ end
 
 local TEST_PREFIX = 'test_'
 function UnitTest.run(test_fun)
-  local didSetup = false
   local tests = {}
-  if nil == test_fun then
-    for key,func in pairs(getfenv()) do
-      if String.start_with(key, TEST_PREFIX) then
-        tests[key] = func 
+  if 'table' == type(test_fun) then
+    local klass = Object.mixin(test_fun)
+    local instance = klass.new()
+    for _,name in pairs(instance.methods()) do
+      if String.start_with(name, TEST_PREFIX) then
+        UnitTest.tests[name] = {
+          test = instance[name],
+          passed = 0,
+          failed = 0,
+        }
+        currentTest = key
+        instance.setup()
+        instance[name]()
+        instance.tear_down()
+        currentTest = nil
       end
-    end
+    end 
   else
-    tests['test'] = test_fun
-  end
-  for key,func in pairs(tests) do
-    if not didSetup then
-      didSetup = true
-      UnitTest.setup()
+    if nil == test_fun then
+      for name,func in pairs(getfenv()) do
+        if String.start_with(name, TEST_PREFIX) then
+          tests[name] = func 
+        end
+      end
+    else
+      tests['test'] = test_fun
     end
-    UnitTest.tests[key] = {
-      test = func,
-      passed = 0,
-      failed = 0,
-    }
-    currentTest = key
-    func()
-    currentTest = nil
+    local didSetup = false
+    for name,func in pairs(tests) do
+      if not didSetup then
+        didSetup = true
+        UnitTest.setup()
+      end
+      UnitTest.tests[name] = {
+        test = func,
+        passed = 0,
+        failed = 0,
+      }
+      currentTest = name
+      func()
+      currentTest = nil
+    end
+    UnitTest.report()
   end
-  UnitTest.report()
 end
 
 
