@@ -8,7 +8,7 @@ require 'TableExt'
 require 'ObjectExt'
 
 local currentTest = nil
-UnitTest = { dot_if_passed = false, tests = {}, passed = 0, failed = 0, setupAt = nil }
+UnitTest = { dot_if_passed = true, tests = {}, passed = 0, failed = 0, setupAt = nil }
 
 
 local function _extract_filename_line_from_debug_traceback(traceback)
@@ -95,7 +95,6 @@ end
 
 function UnitTest.setup()
   UnitTest.setupAt = os.clock()
-  UnitTest.dot_if_passed = true
   print("Started")
 end
 
