@@ -128,7 +128,7 @@ function test_array()
       cnt = cnt + 1
     end
   end
-  assert_true(3 > cnt)
+  assert_true(4 > cnt)
   assert_equal({1,2,3,4}, a)
 
   Table.clear(a)

@@ -76,7 +76,7 @@ if nil == socket then
   end)
 end
 local _old_time_seed = nil
-local _last_random = math.random(0,100000000000)
+local _last_random = math.random(0,1000000000)
 function get_random(num)
   while true do
     local new_time_seed = _socket.gettime() * 10000 + _last_random
@@ -84,7 +84,7 @@ function get_random(num)
     else
       _old_time_seed = new_time_seed
       math.randomseed(new_time_seed)
-      _last_random = math.random(0,100000000000)
+      _last_random = math.random(0,1000000000)
       local random = math.random(0,num)
       --print('seed: ', new_time_seed, 'random :', random)
       return random
