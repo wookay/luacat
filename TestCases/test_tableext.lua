@@ -169,6 +169,25 @@ function test_dictionary()
   assert_equal({}, dict)
 end
 
+function test_each()
+  local sum = 0
+  local ary = {1,2,3}
+  for e in each(ary) do
+    sum = sum + e
+  end
+  assert_equal(6, sum)
+
+  local keys = {}
+  local values = {}
+  local dict = { name = 'sejong', age = 20}
+  for k,v in each(dict) do
+    table.insert(keys, k)
+    table.insert(values, v)
+  end
+  assert_equal({'name', 'age'}, keys)
+  assert_equal({'sejong', 20}, values)
+end
+
 
 if is_main() then 
   UnitTest.run()

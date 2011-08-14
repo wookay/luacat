@@ -298,3 +298,19 @@ function Table.clear(self)
   end
   return self
 end 
+
+
+-----------
+-- Iterator
+-----------
+function each(t)
+  return coroutine.wrap(function()
+    for k,v in pairs(t) do
+      if "number" == type(k) then
+        coroutine.yield(v)
+      else
+        coroutine.yield(k,v)
+      end
+    end
+  end)
+end
