@@ -198,12 +198,12 @@ function test_each_sorted()
 end
 
 function test_each_sorted_key_has_table()
-  local dict = { [{2}] = 'sejong', [{1}] = 20}
+  local dict = { [{2}] = 'sejong', [{1}] = 'king', [{12}] = 20}
   local keys = {}
   for k,v in each_sorted(dict) do
     table.insert(keys, k)
   end
-  assert_equal({{1},{2}}, keys)
+  assert_equal({{1},{2},{12}}, keys)
 end
 
 if is_main() then 

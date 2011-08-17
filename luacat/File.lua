@@ -2,7 +2,7 @@
 
 File = extends(Object)
 
-function File.initialize(self, opened_file)
+File.initialize = function(self, opened_file)
   self.opened_file = opened_file
 end
 

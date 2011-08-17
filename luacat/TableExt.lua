@@ -299,6 +299,19 @@ function Table.clear(self)
   return self
 end 
 
+-------------------
+-- Array Comparison
+-------------------
+Table.mt.__lt = function(a, b)
+  for idx,va in ipairs(a) do
+    local vb = b[idx]
+    if va == vb then
+    else
+      return va < vb
+    end
+  end
+  return true
+end
 
 -----------
 -- Iterator
@@ -314,12 +327,18 @@ function each(t)
     end
   end)
 end
+
 function each_sorted(t)
   return coroutine.wrap(function()
     local keys = Table.keys(t)
     table.sort(keys, function(a,b)
       if 'table' == type(a) and 'table' == type(b) then
-        return inspect(a) < inspect(b)
+        setmetatable(a, Table.mt)
+        setmetatable(b, Table.mt)
+        local result = a < b
+        setmetatable(a, nil)
+        setmetatable(b, nil)
+        return result
       else
         return a < b
       end
