@@ -314,3 +314,23 @@ function each(t)
     end
   end)
 end
+function each_sorted(t)
+  return coroutine.wrap(function()
+    local keys = Table.keys(t)
+    table.sort(keys, function(a,b)
+      if 'table' == type(a) and 'table' == type(b) then
+        return inspect(a) < inspect(b)
+      else
+        return a < b
+      end
+    end)
+    for _,k in pairs(keys) do
+      local v = t[k]
+      if 'number' == type(k) then
+        coroutine.yield(v)
+      else
+        coroutine.yield(k,v)
+      end
+    end
+  end)
+end

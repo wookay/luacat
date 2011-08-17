@@ -188,6 +188,23 @@ function test_each()
   assert_equal({'sejong', 20}, values)
 end
 
+function test_each_sorted()
+  local dict = { name = 'sejong', age = 20}
+  local keys = {}
+  for k,v in each_sorted(dict) do
+    table.insert(keys, k)
+  end
+  assert_equal({'age', 'name'}, keys)
+end
+
+function test_each_sorted_key_has_table()
+  local dict = { [{2}] = 'sejong', [{1}] = 20}
+  local keys = {}
+  for k,v in each_sorted(dict) do
+    table.insert(keys, k)
+  end
+  assert_equal({{1},{2}}, keys)
+end
 
 if is_main() then 
   UnitTest.run()
