@@ -31,6 +31,10 @@ function string_to_uchars(str)
   return uchars
 end
 
+function uchars_to_string(uchars)
+  return Table.join(uchars, '')
+end
+
 function hangul_chosungs(str)
   local ary = {}
   for k,v in pairs(string_to_uchars(str)) do

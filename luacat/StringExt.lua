@@ -7,6 +7,7 @@ local inspect = require 'inspect'
 LF = "\n"
 DOT = "."
 SPACE = " "
+PERCENT = "%"
 
 
 function SWF(format, ...)
@@ -59,6 +60,7 @@ function String.capitalize(self)
 end
 
 local PLAIN = true
+local PATTERN = false
 function String.start_with(self, prefix)
   return string.find(self, prefix, 1, PLAIN) == 1
 end
@@ -69,20 +71,20 @@ function String.end_with(self, suffix)
 end
 
 function String.include(self, substr)
-  return nil ~= string.find(self, substr, 1)
+  return nil ~= string.find(self, substr, 1, PLAIN)
 end
 
 function String.split(self, pat)
     local t = {}  -- NOTE: use {n = 0} in Lua-5.0
     local fpat = "(.-)" .. pat
     local last_end = 1
-    local s, e, cap = string.find(self, fpat, 1)
+    local s, e, cap = string.find(self, fpat, 1, PATTERN)
     while s do
        if s ~= 1 or cap ~= "" then
       table.insert(t,cap)
        end
        last_end = e+1
-       s, e, cap = string.find(self, fpat, last_end)
+       s, e, cap = string.find(self, fpat, last_end, PATTERN)
     end
     if last_end <= #self then
        cap = string.sub(self, last_end)
@@ -93,7 +95,7 @@ end
 
 -- http://penlight.luaforge.net/
 local function _find_all(s,sub,first,last)
-  local i1,i2 = string.find(s,sub,first,PLAIN)
+  local i1,i2 = string.find(s, sub, first, PLAIN)
   local res = 0
   local k = 0
   while i1 do
@@ -142,4 +144,16 @@ end
 
 function String.gsub(self, from, to)
   return string.gsub(self, from, to)
+end
+
+function String.concat(self, other)
+  return self .. other
+end
+
+String.mt.__mul = function(self, n)
+  local str = ''
+  for idx = 1, n do
+    str = str .. self.__value
+  end
+  return str
 end

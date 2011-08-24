@@ -30,7 +30,14 @@ function log_info(one, ...)
   if 0 == #rest then
     print_line(fun(one))
   else
-    try(function() print_line(string.format(one, unpack(Table.map(rest, fun)))) end,
+    try(function()
+      if 'string' == type(one) and String.include(one, PERCENT) then
+        print_line(string.format(one, unpack(Table.map(rest, fun))))
+      else
+        format = Table.join(_({'%s'}) * (1 + #rest), SPACE)
+        print_line(string.format(format, fun(one), unpack(Table.map(rest, fun))))
+      end
+    end,
     function(exception) print_line(exception, one, inspect(rest)) end)
   end
 end

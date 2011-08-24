@@ -134,9 +134,35 @@ function test_array()
   Table.clear(a)
   assert_equal({}, a)
 
+  assert_equal({5,5,5}, _({5}) * 3)
+  assert_equal({1,2,1,2,1,2}, _({1,2}) * 3)
 end
 
+function test_each_slice_each_cons()
+  local ary = {1,2,3,4,5,6,7,8,9,10}
+  local groups = {}
+  Table.each_slice(ary, 3, function(a)
+    table.insert(groups, a)
+  end)
+  assert_equal({{1,2,3}, {4,5,6}, {7,8,9}, {10}}, groups)
+  local groups = {}
+  Table.each_cons(ary, 3, function(a)
+    table.insert(groups, a)
+  end)
+  assert_equal({{1,2,3}, {2,3,4}, {3,4,5}, {4,5,6}, {5,6,7}, {6,7,8}, {7,8,9}, {8,9,10}}, groups)
 
+  local ary = {1,2,3,4}
+  local groups = {}
+  Table.each_slice(ary, 3, function(a)
+    table.insert(groups, a)
+  end)
+  assert_equal({{1,2,3}, {4}}, groups)
+  local groups = {}
+  Table.each_cons(ary, 3, function(a)
+    table.insert(groups, a)
+  end)
+  assert_equal({{1,2,3},{2,3,4}}, groups)
+end
 
 function test_dictionary()
   assert_equal({}, {a,b,c})
@@ -188,19 +214,19 @@ function test_each()
   assert_equal({'sejong', 20}, values)
 end
 
-function test_each_sorted()
+function test_sorted_each()
   local dict = { name = 'sejong', age = 20}
   local keys = {}
-  for k,v in each_sorted(dict) do
+  for k,v in sorted_each(dict) do
     table.insert(keys, k)
   end
   assert_equal({'age', 'name'}, keys)
 end
 
-function test_each_sorted_key_has_table()
+function test_sorted_each_key_has_table()
   local dict = { [{2}] = 'sejong', [{1}] = 'king', [{12}] = 20}
   local keys = {}
-  for k,v in each_sorted(dict) do
+  for k,v in sorted_each(dict) do
     table.insert(keys, k)
   end
   assert_equal({{1},{2},{12}}, keys)

@@ -2,6 +2,8 @@
 --                           wookay.noh at gmail.com 
 
 
+require 'Exception'
+
 PI = math.pi
 FF = 255
 

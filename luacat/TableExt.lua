@@ -68,6 +68,10 @@ end
 
 -- http://penlight.luaforge.net/
 function Table.slice(self, first, last)
+  if 'table' == type(first) then
+    last = first[2]
+    first = first[1]
+  end
   local sz = #self
   --if not first then first=1 end
   if first < 0 then first=sz+first+1 end
@@ -135,6 +139,33 @@ function Table.shuffle(self)
   end
 end
 
+function Table.first(self)
+  return self[1]
+end
+
+function Table.last(self)
+  return self[#self]
+end
+
+function Table.each_slice(self, n, fun)
+  for idx=1, #self, n do
+    fun(Table.slice(self, idx, idx+n-1))
+  end
+end
+
+function Table.each_cons(self, n, fun)
+  for idx=1, #self-n+1 do
+    fun(Table.slice(self, idx, idx+n-1))
+  end
+end
+
+Table.mt.__mul = function(self, n)
+  local ary = {}
+  for idx = 1, n do
+    Table.concat(ary, self.__value)
+  end
+  return ary
+end
 
 
 ------------------------
@@ -147,6 +178,10 @@ function Table.keys(self)
     table.insert(keys, key)
   end
   return keys
+end
+
+function Table.sorted_keys(self)
+  return Table.sort(Table.keys(self))
 end
 
 function Table.values(self)
@@ -166,6 +201,22 @@ function Table.merge(self, kv)
     dict[k] = v
   end
   return dict
+end
+
+function Table.update(self, kv)
+  for k,v in pairs(kv) do
+    self[k] = v
+  end
+end
+
+function Table.append(self, k, v)
+  local t = self[k]
+  if nil == t then
+    self[k] = { v }
+  else
+    table.insert(t, v)
+    self[k] = t
+  end
 end
 
 function Table.has_key(self, key)
@@ -328,7 +379,7 @@ function each(t)
   end)
 end
 
-function each_sorted(t)
+function sorted_each(t)
   return coroutine.wrap(function()
     local keys = Table.keys(t)
     table.sort(keys, function(a,b)

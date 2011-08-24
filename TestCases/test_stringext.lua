@@ -60,6 +60,12 @@ function test_string()
   assert_one_of(_("").methods(), 'split')
 
   assert_equal("apple", String.gsub("abc", "bc", "pple"))
+
+  local str = 'a'
+  assert_equal("ab", String.concat(str, 'b'))
+  assert_equal("a", str) -- immutable
+  assert_equal("aaaaa", _('a') * 5)
+  assert_equal("ababab", _('ab') * 3)
 end
 
 function test_to_s()

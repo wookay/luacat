@@ -15,7 +15,8 @@ log_info( "test nil : %s", to_s(nil) )
 log_info( "test {1} : %s", {1} )
 log_info( "test {a=1} {b=2} : %s %s", {a=1}, {b=2})
 log_info( {a=1, b=2, c=3, d=4, e=5, f=6, g=7, h=8, i=9, j=10, k=11} )
-
+log_info( "abc", {1, 2, 3} )
+log_info( {1, 2, 3}, "abc" )
 
 --[[
 
@@ -39,5 +40,7 @@ test_logger.lua:17      { a = 1,
   i = 9, 
   j = 10, 
   k = 11 }
+test_logger.lua:18      abc {1, 2, 3}
+test_logger.lua:19      {1, 2, 3} abc
 
 --]]

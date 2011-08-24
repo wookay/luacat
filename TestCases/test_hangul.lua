@@ -5,6 +5,15 @@ package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 require 'Hangul'
 
+function test_string_to_uchars()
+  local str = "a가b나"
+  assert_equal(8, #str)
+  local uchars = string_to_uchars(str)
+  assert_equal(4, #uchars)
+  assert_equal({"a", "가", "b", "나"}, uchars)
+  assert_equal("a가b나", uchars_to_string(uchars))
+end
+
 function test_hangul_chosungs()
   assert_equal({"a", "ㄱ", "b", "ㄴ"}, hangul_chosungs("a가b나"))
   assert_equal({"ㄱ", "ㄴ", "ㄷ"}, hangul_chosungs("가나다"))
