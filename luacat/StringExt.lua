@@ -151,9 +151,5 @@ function String.concat(self, other)
 end
 
 String.mt.__mul = function(self, n)
-  local str = ''
-  for idx = 1, n do
-    str = str .. self.__value
-  end
-  return str
+  return string.rep(self.__value, n)
 end
