@@ -169,9 +169,9 @@ function Inspector:putTable(t)
         end
         self:tabify():putKey(k):puts(' = '):putValue(t[k])
       end
-      if multilined then
-        self:puts(" ")
-      end
+      --if multilined then
+      --  self:puts(" ")
+      --end
 
       if mt then
         comma = self:putComma(comma)
