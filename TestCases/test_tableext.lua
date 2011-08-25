@@ -109,6 +109,7 @@ function test_array()
   assert_true(Table.include({1,2,3}, 1))
   assert_false(Table.include({1,2,3}, 0))
 
+  assert_empty({})
   assert_not_empty({1})
 
   assert_equal(5, Table.count({1,2,3,3,5}))
@@ -128,7 +129,7 @@ function test_array()
       cnt = cnt + 1
     end
   end
-  assert_true(4 > cnt)
+  assert_true(5 > cnt)
   assert_equal({1,2,3,4}, a)
 
   Table.clear(a)

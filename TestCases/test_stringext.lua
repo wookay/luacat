@@ -20,8 +20,9 @@ function test_string()
   assert_equal("a b c", String.strip(str))
   assert_equal("a b c  ", String.lstrip(str))
   assert_equal("  a b c", String.rstrip(str))
-  assert_equal({"", "a", "b", "c", ""}, String.split(str, SPACE))
-  assert_equal({"", "a", "b", "c", ""}, _(str).split(SPACE))
+
+  assert_equal({"a", "b", "c"}, String.split("a b c", SPACE))
+  assert_equal({"a", "b", "c"}, _("a b c").split(SPACE))
 
   assert_equal(3, String.length("abc"))
   assert_equal("cba", String.reverse("abc"))
@@ -49,7 +50,10 @@ function test_string()
   assert_equal("abcd", string.gsub("abcff","ff","d"))
 
   assert_true(String.is_empty(""))
+  assert_false(String.is_empty(" "))
   assert_not_empty(" ")
+  assert_not_empty("\n")
+  assert_empty("")
 
   assert_equal(2, String.count("hello", "l"))
   assert_equal(1, String.count("hello", "ll"))

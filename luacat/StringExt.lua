@@ -7,6 +7,7 @@ local inspect = require 'inspect'
 LF = "\n"
 DOT = "."
 SPACE = " "
+SLASH = "/"
 PERCENT = "%"
 
 

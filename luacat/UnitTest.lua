@@ -66,6 +66,16 @@ function assert_not_equal(expected, got)
   end
 end
 
+function assert_empty(got)
+  if "table" == type(got) then
+    _assert_equal(true, Table.is_empty(got), "empty", got)
+  elseif "string" == type(got) then
+    _assert_equal(true, String.is_empty(got), "empty", got)
+  else
+    error(SWF("assert_empty but %s", to_s(got)))
+  end
+end
+
 function assert_not_empty(got)
   if "table" == type(got) then
     _assert_equal(false, Table.is_empty(got), "not empty", got)
