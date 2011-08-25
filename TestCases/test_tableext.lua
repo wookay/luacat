@@ -194,6 +194,8 @@ function test_dictionary()
 
   Table.clear(dict)
   assert_equal({}, dict)
+
+  assert_equal({a=1, b=2}, Hash({{'a',1},{'b',2}}))
 end
 
 function test_each()

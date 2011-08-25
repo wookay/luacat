@@ -350,6 +350,14 @@ function Table.clear(self)
   return self
 end 
 
+function Hash(array)
+  local dict = {}
+  for _,e in pairs(array) do
+    dict[e[1]] = e[2]
+  end
+  return dict
+end
+
 -------------------
 -- Array Comparison
 -------------------
