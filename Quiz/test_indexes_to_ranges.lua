@@ -1,5 +1,5 @@
 -- test_indexes_to_ranges.lua
---                           wookay.noh at gmail.com
+--                           
 
 package.path = package.path .. ";../luacat/?.lua"
 require 'luacat'
