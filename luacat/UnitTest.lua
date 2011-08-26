@@ -133,9 +133,13 @@ function UnitTest.run(test_fun)
           failed = 0,
         }
         currentTest = key
-        instance.setup()
+        if nil ~=  instance.setup then
+          instance.setup()
+        end
         instance[name]()
-        instance.tear_down()
+        if nil ~=  instance.teardown then
+          instance.teardown()
+        end
         currentTest = nil
       end
     end 

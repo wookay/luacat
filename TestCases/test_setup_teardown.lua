@@ -10,7 +10,7 @@ function TestBox.setup(self)
   self.base = 1
 end
 
-function TestBox.tear_down(self)
+function TestBox.teardown(self)
   self.base = 0
 end
 
