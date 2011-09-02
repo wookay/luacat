@@ -11,6 +11,7 @@ require 'test_dateext'
 require 'test_exception'
 require 'test_metatable'
 require 'test_unittest'
+require 'test_casestatement'
 require 'test_setup_teardown'
 require 'test_luacat'
 

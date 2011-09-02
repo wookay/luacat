@@ -3,6 +3,7 @@
 
 package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
+require 'Logger'
 
 function test_metatable()
   local dict = { a = 2 }
