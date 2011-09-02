@@ -49,7 +49,7 @@ function test_case_duplicated()
     'a', function() sum = sum + 1 end,
     'a', function() sum = sum + 1 end
   )
-  assert_equal(2, sum)
+  assert_equal(1, sum)
 end
 
 function test_match_case()
@@ -68,6 +68,12 @@ function test_match_case()
   assert_equal(5, sum)
 end
 
+function test_case_result()
+  local result = case(1,
+    1, function() return 1 end
+  )
+  assert_equal(1, result)
+end
 
 if is_main() then 
   UnitTest.run()
