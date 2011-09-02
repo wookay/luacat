@@ -73,6 +73,19 @@ function test_case_result()
     1, function() return 1 end
   )
   assert_equal(1, result)
+
+ local result = match_case('/',
+    "/a+", function() return 'a' end,
+    "/b+", function() return 'b' end,
+    function() return 'c' end
+  )
+  assert_equal('c', result)
+
+ local result = match_case(nil,
+    "/a+", function() return 'a' end,
+    function() return 'c' end
+  )
+  assert_equal('c', result)
 end
 
 if is_main() then 

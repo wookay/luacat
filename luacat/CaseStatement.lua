@@ -25,8 +25,11 @@ function match_case(target, ...)
     local when, fun = pair[1], pair[2]
     if 'function' == type(when) then
       return when()
-    elseif 0 < #string.match(target, when) then
-      return fun()
+    elseif target then
+      local one, two = string.find(target, when)
+      if two and two > 0 then
+        return fun()
+      end
     end
   end
 end
