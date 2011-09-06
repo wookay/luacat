@@ -9,6 +9,14 @@ require 'NumberExt'
 -- Array Extensions
 -------------------
 
+function Table.new(size, obj)
+  local ary = {}
+  for idx = 1, size or 0 do
+    table.insert(ary, obj)
+  end
+  return ary
+end
+
 function Table.join(self, sep)
   return table.concat(self, sep)
 end

@@ -235,6 +235,11 @@ function test_sorted_each_key_has_table()
   assert_equal({{1},{2},{12}}, keys)
 end
 
+function test_table_new()
+  assert_equal({}, Table.new())
+  assert_equal({'*','*','*'}, Table.new(3, '*'))
+end
+
 if is_main() then 
   UnitTest.run()
 end
