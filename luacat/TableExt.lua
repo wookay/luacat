@@ -167,6 +167,12 @@ function Table.each_cons(self, n, fun)
   end
 end
 
+function Table.delete_at(self, idx)
+  local e = self[idx]
+  table.remove(self, idx)
+  return e
+end
+
 Table.mt.__mul = function(self, n)
   local ary = {}
   for idx = 1, n do

@@ -34,7 +34,7 @@ function log_info(one, ...)
       if 'string' == type(one) and String.include(one, PERCENT) then
         print_line(string.format(one, unpack(Table.map(rest, fun))))
       else
-        format = Table.join(_({'%s'}) * (1 + #rest), SPACE)
+        format = Table.join(Table.new(1 + #rest, '%s'), SPACE)
         print_line(string.format(format, fun(one), unpack(Table.map(rest, fun))))
       end
     end,

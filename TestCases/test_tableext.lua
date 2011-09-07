@@ -46,14 +46,6 @@ function test_array()
   assert_equal({5,4,3,2,1}, Table.reverse(array))
   assert_equal({1,2,3,4,5}, Table.to_a(array))
 
-  assert_equal(nil, Table.at({5,6}, 0))
-  assert_equal(5, Table.at({5,6}, 1))
-  assert_equal(6, Table.at({5,6}, 2))
-  assert_equal(nil, Table.at({5,6}, 3))
-  assert_equal(6, Table.at({5,6}, -1))
-  assert_equal(5, Table.at({5,6}, -2))
-  assert_equal(nil, Table.at({5,6}, -3))
-
   assert_equal(1, Table.index({5,6}, 5))
   assert_equal(nil, Table.index({5,6}, 7))
 
@@ -238,6 +230,22 @@ end
 function test_table_new()
   assert_equal({}, Table.new())
   assert_equal({'*','*','*'}, Table.new(3, '*'))
+end
+
+function test_table_at()
+  assert_equal(nil, Table.at({5,6}, 0))
+  assert_equal(5, Table.at({5,6}, 1))
+  assert_equal(6, Table.at({5,6}, 2))
+  assert_equal(nil, Table.at({5,6}, 3))
+  assert_equal(6, Table.at({5,6}, -1))
+  assert_equal(5, Table.at({5,6}, -2))
+  assert_equal(nil, Table.at({5,6}, -3))
+end
+
+function test_table_delete_at()
+  local ary = {5,6,7}
+  assert_equal(5, Table.delete_at(ary, 1))
+  assert_equal({6,7}, ary)
 end
 
 if is_main() then 
