@@ -195,6 +195,16 @@ function test_synthesize()
   assert_equal(15, a.age)
 end
 
+function test_lua_object()
+  assert_equal(3, ("abc"):len())
+  assert_equal(3, _("abc"):length())
+  assert_equal(3, _("abc").length())
+
+  assert_equal("ABC", ("abc"):upper())
+  assert_equal("ABC", _("abc"):upcase())
+  assert_equal("ABC", _("abc").upcase())
+end
+
 if is_main() then 
   UnitTest.run()
 end

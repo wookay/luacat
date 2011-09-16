@@ -131,6 +131,22 @@ function test_array()
   assert_equal({1,2,1,2,1,2}, _({1,2}) * 3)
 end
 
+function test_inject()
+  local result = Table.inject({1,2,3}, 0, function(result, e)
+    return result + e
+  end)
+  assert_equal(6, result)
+  local result = Table.inject({'a','b','c'}, '', function(result, e)
+    return result .. e
+  end)
+  assert_equal("abc", result)
+  local result = Table.inject({'a','b','c'}, {}, function(result, e)
+    table.insert(result, e)
+    return result
+  end)
+  assert_equal({'a','b','c'}, result)
+end
+
 function test_each_slice_each_cons()
   local ary = {1,2,3,4,5,6,7,8,9,10}
   local groups = {}

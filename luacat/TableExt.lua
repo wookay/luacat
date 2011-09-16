@@ -167,6 +167,13 @@ function Table.each_cons(self, n, fun)
   end
 end
 
+function Table.inject(self, result, fun)
+  for k,e in pairs(self) do
+    result = fun(result, e)
+  end
+  return result
+end
+
 function Table.delete_at(self, idx)
   local e = self[idx]
   table.remove(self, idx)
