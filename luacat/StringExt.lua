@@ -2,6 +2,7 @@
 --                           wookay.noh at gmail.com 
 
 require 'ObjectExt'
+require 'TableExt'
 local inspect = require 'inspect'
 
 LF = "\n"
@@ -9,6 +10,8 @@ DOT = "."
 SPACE = " "
 SLASH = "/"
 PERCENT = "%"
+COMMA = ","
+COMMA_SPACE = ", "
 
 
 function SWF(format, ...)
@@ -19,8 +22,16 @@ function _w(str)
   return String.split(str, SPACE)
 end
 
-function to_s(obj)
-  return inspect(obj)
+function to_s(one, ...)
+  local rest = {...} 
+  if 0 == #rest then
+    return inspect(one)
+  else
+    return Table.join(
+             Table.map(Table.concat({one}, rest),
+               function(obj) return inspect(obj) end),
+             COMMA_SPACE)
+  end
 end
 
 

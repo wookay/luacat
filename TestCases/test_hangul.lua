@@ -5,6 +5,14 @@ package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 require 'Hangul'
 
+function test_group_by_chosung()
+  local words = {'감자','마늘','고구마'}
+  local group = group_by_chosung(words)
+  assert_equal(
+    { ['ㄱ'] = { '감자', '고구마'}, ['ㅁ'] = { '마늘' }},
+    group)
+end
+
 function test_string_to_uchars()
   local str = "a가b나"
   assert_equal(8, #str)

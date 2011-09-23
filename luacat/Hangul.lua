@@ -44,6 +44,23 @@ function hangul_chosungs(str)
   return ary
 end
 
+function group_by_chosung(words)
+  local group = {}
+  for k,word in pairs(words) do
+    for k,v in pairs(string_to_uchars(word)) do
+      local t = hangul_split(v)
+      local chosung = t[1]
+      if nil == group[chosung] then
+        group[chosung] = {word}
+      else
+        table.insert(group[chosung], word)
+      end
+      break
+    end
+  end
+  return group
+end
+
 function hangul_split(str)
   local n = string_to_utf8_char(str)
   if n >= Hangul.Ga and n <= Hangul.Hih then

@@ -4,6 +4,7 @@
 package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 require 'StringExt'
+require 'Logger'
 
 function test_string()
 
@@ -75,6 +76,12 @@ end
 function test_to_s()
   assert_equal("nil", to_s(nil))
   assert_equal("{}", to_s({}))
+  assert_equal("{}", to_s({nil}))
+  function multiple(...)
+    return ...
+  end
+  assert_equal("1, 2", to_s(1, 2))
+  assert_equal("1, 2", to_s(multiple(1,2)))
 end
 
 
