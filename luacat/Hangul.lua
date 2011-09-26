@@ -61,8 +61,8 @@ function group_by_chosung(words)
   return group
 end
 
-function hangul_split(str)
-  local n = string_to_utf8_char(str)
+function hangul_split(uchar)
+  local n = string_to_utf8_char(uchar)
   if n >= Hangul.Ga and n <= Hangul.Hih then
     n = n - Hangul.Ga
     local n1 = float_to_int(n / Hangul.ChosungOffset) + 1
@@ -73,7 +73,7 @@ function hangul_split(str)
              Hangul.Jungsungs[n2],
              Hangul.Jongsungs[n3] }
   else
-    return { str }
+    return { uchar }
   end
 end
 
@@ -84,6 +84,34 @@ function hangul_join(ary)
     (Table.index(Hangul.Jungsungs, jung) - 1) * Hangul.JungsungOffset +
     (Table.index(Hangul.Jongsungs, jong) - 1)
   return utf8_char_to_string(uch)
+end
+
+function hangul_string_split(str)
+  local result = {}
+  for k,v in pairs(string_to_uchars(str)) do
+    table.insert(result, hangul_split(v))
+  end 
+  return result
+end
+
+local function _hangul_string_split_out(str)
+  local result = {}
+  for k,v in pairs(string_to_uchars(str)) do
+    table.insert(result, Table.join(hangul_split(v), EMPTY))
+  end 
+  return Table.join(result, EMPTY)
+end
+
+function hangul_search(words, part)
+  local target = _hangul_string_split_out(part)
+  local result = {}
+  for k,word in pairs(words) do
+    local t = _hangul_string_split_out(word)
+    if String.include(t, target) then
+      table.insert(result, word)
+    end
+  end
+  return result
 end
 
 

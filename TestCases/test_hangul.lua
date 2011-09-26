@@ -5,13 +5,6 @@ package.path = package.path .. ";../luacat/?.lua"
 require 'UnitTest'
 require 'Hangul'
 
-function test_group_by_chosung()
-  local words = {'감자','마늘','고구마'}
-  local group = group_by_chosung(words)
-  assert_equal(
-    { ['ㄱ'] = { '감자', '고구마'}, ['ㅁ'] = { '마늘' }},
-    group)
-end
 
 function test_string_to_uchars()
   local str = "a가b나"
@@ -34,6 +27,23 @@ function test_hangul_split_join()
   assert_equal("가", hangul_join({"ㄱ", "ㅏ", EMPTY}))
   assert_equal("한", hangul_join({"ㅎ", "ㅏ", "ㄴ"}))
   assert_equal("글", hangul_join({"ㄱ", "ㅡ", "ㄹ"}))
+end
+
+function test_group_by_chosung()
+  local words = {'감자','마늘','고구마'}
+  local group = group_by_chosung(words)
+  assert_equal(
+    { ['ㄱ'] = { '감자', '고구마'}, ['ㅁ'] = { '마늘' }},
+    group)
+end
+
+function test_hangul_search()
+  local words = {'감자','마늘','고구마'}
+  assert_equal({'감자', '고구마'}, hangul_search(words, 'ㄱ'))
+  assert_equal({'감자'}, hangul_search(words, '가'))
+  assert_equal({'감자'}, hangul_search(words, '감'))
+  assert_equal({'감자'}, hangul_search(words, '감ㅈ'))
+  assert_equal({'고구마'}, hangul_search(words, '구'))
 end
 
 if is_main() then 
