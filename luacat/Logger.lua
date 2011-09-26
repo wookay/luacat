@@ -16,8 +16,8 @@ if nil == Logger then
 end
 
 local function _extract_filename_line_for_log_info(n, traceback)
-  return _(_(_(traceback).
-               split("in function 'log_info'")[n]).split(': ')[1]).lstrip()
+  return _(_(_(_(_(traceback).
+           split(": in function '")).at(n)).split(': ')[1]).split(LF)[2]).lstrip()
 end
 
 local function print_line(n, line)
@@ -56,7 +56,7 @@ end
 
 function log_info(one, ...)
   if nil == Logger.log_info then
-    log_info_impl(2, one, ...)
+    log_info_impl(-1, one, ...)
   else
     Logger.log_info(one, ...)
   end
