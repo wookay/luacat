@@ -16,8 +16,21 @@ if nil == Logger then
 end
 
 local function _extract_filename_line_for_log_info(traceback)
-  return _(_(_(_(_(traceback).
-           split(": in function '")).at(-1)).split(': ')[1]).split(LF)[2]).lstrip()
+  local PLAIN = true
+  local tailcall = string.find(traceback, '(tail call): ?', 1, PLAIN)
+  local text = nil
+  local index = -1
+  if nil == tailcall then
+    if string.find(traceback, 'UnitTest.lua', 1, PLAIN) then
+      index = -3
+    end
+    text = traceback
+  else
+    text = String.slice(traceback, 1, tailcall)
+  end
+  return _(_(_(_(_(text).
+           split(": in function '")).at(index)).
+           split(': ')[1]).split(LF)[2]).lstrip()
 end
 
 local function print_line(line)

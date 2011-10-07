@@ -6,6 +6,14 @@ require 'UnitTest'
 require 'StringExt'
 require 'Logger'
 
+function test_string_multiline()
+  local str = [[
+a
+b
+]]
+  assert_equal("a\nb\n", str)
+end
+
 function test_string()
 
   assert_equal("b", _("abcde").slice(2,2))
