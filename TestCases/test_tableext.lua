@@ -29,6 +29,10 @@ function test_lua_table()
     cnt = cnt + 1
   end
   assert_equal(6, cnt)
+  
+  assert_equal(6, Table.count(a))
+  a.c = nil
+  assert_equal(5, Table.count(a))
 end
 
 

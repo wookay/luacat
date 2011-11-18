@@ -66,6 +66,11 @@ String, Table, Number, Date extensions.
 see TestCases.
 
 
+Moai Extensions
+---------------
+luacat has also included moacat, for Moai <http://getmoai.com/> extensions.
+see MoacatTestCases.
+
 
 Feedback
 --------
