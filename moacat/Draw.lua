@@ -1,22 +1,20 @@
 -- Draw.lua
 --                           wookay.noh at gmail.com 
 
-package.path = package.path .. ";../luacat/?.lua"
 require 'luacat'
 require 'Color'
-require 'Rect'
 
 Draw = extends(Object)
 Draw.penColor = Color.white
 
 function Draw.fillRect(obj, rect)
-  mscriptDeck = MOAIScriptDeck.new()
-  mscriptDeck:setRect(unpack_rect(rect))
+  local mscriptDeck = MOAIScriptDeck.new()
+  mscriptDeck:setRect(Rect.unpack(rect))
   mscriptDeck:setDrawCallback(function()
     MOAIGfxDevice.setPenColor(unpack(Draw.penColor))
-    MOAIDraw.fillRect(unpack_rect(rect))
+    MOAIDraw.fillRect(Rect.unpack(rect))
   end)
-  mprop = MOAIProp2D.new()
+  local mprop = MOAIProp2D.new()
   mprop:setDeck(mscriptDeck)
   obj.wrap:insertProp(mprop)
 end
