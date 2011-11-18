@@ -3,23 +3,40 @@
 
 require 'luacat'
 require 'Color'
+require 'Screen'
+require 'ScriptDeck'
 
 Draw = extends(Object)
 Draw.penColor = Color.white
 
-function Draw.fillRect(obj, rect)
-  local mscriptDeck = MOAIScriptDeck.new()
-  mscriptDeck:setRect(Rect.unpack(rect))
-  mscriptDeck:setDrawCallback(function()
+local function draw_rect(fun, layer, rect)
+  local origin = rect[1]
+  local size = rect[2]
+  local scriptDeck = ScriptDeck.new(function()
     MOAIGfxDevice.setPenColor(unpack(Draw.penColor))
-    MOAIDraw.fillRect(Rect.unpack(rect))
-  end)
-  local mprop = MOAIProp2D.new()
-  mprop:setDeck(mscriptDeck)
-  obj.wrap:insertProp(mprop)
+    fun(unpack(centered_rect_by_size(size)))
+  end, size)
+  local prop = Prop.new(scriptDeck)
+  prop.origin = origin
+  layer.wrap:insertProp(prop.wrap)
 end
 
 
+function Draw.drawRect(layer, rect)
+  draw_rect(MOAIDraw.drawRect, layer, rect)
+end
+
+function Draw.fillRect(layer, rect)
+  draw_rect(MOAIDraw.fillRect, layer, rect)
+end
+
+function Draw.drawCircle(layer, rect)
+  draw_rect(MOAIDraw.drawCircle, layer, rect)
+end
+
+function Draw.fillCircle(layer, rect)
+  draw_rect(MOAIDraw.fillCircle, layer, rect)
+end
 
 --[[
    { "drawCircle",             _drawCircle },

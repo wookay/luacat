@@ -7,9 +7,11 @@ require 'moacat'
 function test_moai_draw()
   local layer = Sim.layer()
   Draw.penColor = Color.green
-  Draw.fillRect(layer, {{0,0},{100,50}})
 
-  System.exit_after_seconds(0.1)
+  Draw.drawRect(layer, {{5,5},{100,150}})
+  Draw.fillRect(layer, {{Screen.width-105,5},{100,150}})
+
+  System.exit_after_seconds(0.5)
 end
 
 

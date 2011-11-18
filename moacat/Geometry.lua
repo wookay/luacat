@@ -14,3 +14,9 @@ function Rect.unpack(rect)
   local size = rect[2]
   return unpack({origin[1], origin[2], size[1], size[2]})
 end
+
+function centered_rect_by_size(size)
+  local halfWidth = size[1]/2
+  local halfHeight = size[2]/2
+  return {-halfWidth, -halfHeight, halfWidth, halfHeight}
+end
