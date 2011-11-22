@@ -4,10 +4,13 @@
 
 require 'luacat'
 require 'Screen'
+require 'Debug'
 
 System = extends(Object)
 
 function System.open(layer)
+  Debug.on()
+
   MOAISim.openWindow("sim", Screen.width, Screen.height)
   MOAISim.pushRenderPass(layer.wrap)
 end
