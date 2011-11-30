@@ -21,6 +21,15 @@ function Prop.setOrigin(self, origin)
   self.wrap:setLoc(x, y)
 end
 
+function Prop.getOrigin(self)
+  local xMin, yMin, xMax, yMax = self.wrap:getRect()
+  local xLoc, yLoc = self.wrap:getLoc()
+  local x = Screen.halfWidth + xLoc + xMin
+  local y = Screen.halfHeight - yLoc + yMin
+  return {x,y}
+end
+
+-- listeners
 function Prop.drag_listener(event)
   event.target.wrap:addLoc(unpack(
     Location.diff(event.location, event.previousLocation)))

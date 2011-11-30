@@ -9,22 +9,24 @@ function test_moai_event_recorder()
   local layer = Sim.layer()
   layer.enableTouchEvents()
 
-  function layer.addButton(title, fun)
+  function layer.addButton(title, origin, fun)
     local button = TextButton.new(title, fun)
-    button.origin = {25,25}
+    button.frame = {origin, {100,40}}
     layer.add(button)
   end
 
-  --local recorder = EventRecorder.new()
-  layer.addButton("Start", function()
+  local recorder = EventRecorder.new()
+  layer.addButton("Start", {210,25}, function()
+    recorder.start()
+    log_info('start')
   end)
-  layer.addButton("Stop", function()
+  layer.addButton("Stop", {210,75}, function()
   end)
-  layer.addButton("Replay", function()
+  layer.addButton("Replay", {210,125}, function()
   end)
-  layer.addButton("Save", function()
+  layer.addButton("Save", {210,175}, function()
   end)
-  layer.addButton("Load", function()
+  layer.addButton("Load", {210,225}, function()
   end)
 
 end

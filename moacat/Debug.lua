@@ -3,7 +3,12 @@
 
 Debug = {}
 
-function Debug.on()
+function Debug.setLogLevelAsNone()
+  -- LOG_NONE, LOG_ERROR, LOG_WARNING, LOG_STATUS
+  MOAILogMgr:setLogLevel(MOAILogMgr.LOG_NONE)
+end
+
+function Debug.showLines()
   -- cyan
   MOAIDebugLines.setStyle(MOAIDebugLines.PARTITION_CELLS, 1, 0, 1, 1)
 

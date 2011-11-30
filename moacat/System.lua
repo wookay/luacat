@@ -9,7 +9,8 @@ require 'Debug'
 System = extends(Object)
 
 function System.open(layer)
-  Debug.on()
+  Debug.setLogLevelAsNone()
+  Debug.showLines()
 
   MOAISim.openWindow("sim", Screen.width, Screen.height)
   MOAISim.pushRenderPass(layer.wrap)
@@ -32,7 +33,6 @@ function System.exit_after_seconds(delay)
   )
   timer:start()
 end
-
 
 function is_main()
   return nil == IsMain

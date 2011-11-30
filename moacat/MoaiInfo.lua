@@ -28,7 +28,7 @@ function moai_properties(obj)
     end
   end
   local result = {}
-  local format = "  %-" .. max_name_length .. "s%s"
+  local format = "  %-" .. max_name_length .. "s %s"
   for k, getter in pairs(Table.sort(getters)) do
     local name = String.slice(getter, 4, -1)
     --log_info('name', name)

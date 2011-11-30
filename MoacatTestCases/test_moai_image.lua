@@ -18,6 +18,8 @@ function test_moai_image()
   prop.origin = {Screen.width - deck.image.width,0}
   layer.add(prop)
 
+  assert_equal({Screen.width - deck.image.width,0}, prop.origin)
+
   local prop = Prop.new(deck)
   prop.origin = {0,Screen.height - deck.image.height}
   layer.add(prop)
