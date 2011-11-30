@@ -6,9 +6,9 @@ require 'luacat'
 
 
 Phase = {
-  began = 'b',
-  moved = 'm',
-  ended = 'e',
-  cancelled = 'c',
+  began = 'began',
+  moved = 'moved',
+  ended = 'ended',
+  cancelled = 'cancelled',
 }
 

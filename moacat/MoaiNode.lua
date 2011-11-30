@@ -11,8 +11,14 @@ function MoaiNode.initialize(self)
   self.listeners = nil
 end
 
-function MoaiNode.setListener(self, listener)
-  self.listeners = {listener}
+function MoaiNode.addListener(self, listener, callback)
+  if nil == self.listeners then
+    self.listeners = {}
+  end
+  table.insert(self.listeners, {
+    listener = listener,
+    callback = callback,
+  })
 end
 
 function MoaiNode.doListener(self, event)
@@ -28,8 +34,11 @@ function MoaiNode.doListener(self, event)
     end
   end
   if self.listeners then
-    for k,listener in pairs(self.listeners) do
-      listener(Table.merge(event, {target=self}))
+    for k,l in pairs(self.listeners) do
+      l.listener(Table.merge(event, {
+        target = self,
+        callback = l.callback
+      }))
     end
   end
 end

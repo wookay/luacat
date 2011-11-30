@@ -5,12 +5,17 @@ require 'luacat'
 
 local IGNORE_METHODS = {
   'getClassName', 'getClass',
+  'getAttrLink',              -- MOAINode
   'getFitting', 'getAttr',    -- MOAILayer2D
   'getTimesExecuted',         -- MOAIAnim
   'getValueAtTime',           -- MOAIAnimCurve
 }
 function moai_properties(obj)
-  local t = getmetatable(obj.__index).__index
+  local mt = getmetatable(obj)
+  if nil == mt then
+    return {}
+  end
+  local t = getmetatable(mt).__index
   local getters = {}
   local max_name_length = 0
   for k,v in pairs(t) do

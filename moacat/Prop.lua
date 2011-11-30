@@ -28,6 +28,6 @@ end
 
 function Prop.ended_listener(event)
   if Phase.ended == event.phase then
-    event.callback()
+    event.callback(event)
   end
 end

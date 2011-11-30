@@ -12,7 +12,7 @@ local function new_device_event()
   return {
     lastLocation = nil,
     previousLocation = nil,
-    pick = false,
+    hasPicked = false,
   }
 end
 
@@ -75,7 +75,7 @@ function device_pointer_callback(x, y)
     l.deviceEvent.previousLocation = l.deviceEvent.lastLocation
     local worldX, worldY = l.layer.wrap:wndToWorld(x, y)
     l.deviceEvent.lastLocation = {worldX, worldY}
-    if l.deviceEvent.pick then
+    if l.deviceEvent.hasPicked then
       l.layer.doListener({
         phase = Phase.moved,
         location = {worldX, worldY},
@@ -85,31 +85,31 @@ function device_pointer_callback(x, y)
   end
 end
 
-function device_mouseLeft_callback(down)
+function device_mouseLeft_callback(isDown)
   for k,l in pairs(sharedDeviceManager.layers) do
     local phase = nil
-    if down then
-      l.deviceEvent.pick = true
+    if isDown then
+      l.deviceEvent.hasPicked = true
       phase = Phase.began
     else
       phase = Phase.ended
     end
-    if l.deviceEvent.pick then
+    if l.deviceEvent.hasPicked then
       l.layer.doListener({
         phase = phase,
         location = l.deviceEvent.lastLocation,
         previousLocation = l.deviceEvent.previousLocation,
       })
-      if down then
+      if isDown then
       else
-        l.deviceEvent.pick = false
+        l.deviceEvent.hasPicked = false
       end
     end 
   end
 end
 
-function device_mouseRight_callback(down)
+function device_mouseRight_callback(isDown)
 end
 
-function device_mouseMiddle_callback(down)
+function device_mouseMiddle_callback(isDown)
 end
