@@ -28,7 +28,7 @@ function test_moai_event()
   local button = TextButton.new("Exit", function()
     System.exit_after_seconds(0.1)
   end)
-  button.frame = {{Screen.width - 10,10}, {100,50}}
+  button.frame = {{Screen.width - 110, 10}, {100,50}}
   button.addListener(Prop.drag_listener)
   layer.add(button)
 end

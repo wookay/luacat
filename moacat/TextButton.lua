@@ -27,7 +27,7 @@ end
 function TextButton.setFrame(self, frame)
   local origin = frame[1]
   local size = frame[2]
-  local x = origin[1] - Screen.halfWidth - size[1]
+  local x = origin[1] - Screen.halfWidth
   local y = -origin[2] + Screen.halfHeight - size[2]
   self.wrap:setRect(x, y, x+size[1], y+size[2])
 end
