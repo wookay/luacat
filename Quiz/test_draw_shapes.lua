@@ -31,35 +31,40 @@ function test_draw_diamond()
   assert_equal([[
  * 
 ***
- * ]], draw_diamond(3))
+ * 
+]], draw_diamond(3))
 end
 
 function test_draw_pyramid()
   assert_equal([[
   *  
  *** 
-*****]], draw_pyramid(3))
+*****
+]], draw_pyramid(3))
 end
 
 function test_draw_inverted_pyramid()
   assert_equal([[
 *****
  *** 
-  *  ]], draw_inverted_pyramid(3))
+  *  
+]], draw_inverted_pyramid(3))
 end
 
 function test_draw_left_aligned_triangle()
   assert_equal([[
 *  
 ** 
-***]], draw_left_aligned_triangle(3))
+***
+]], draw_left_aligned_triangle(3))
 end
 
 function test_draw_right_aligned_triangle()
   assert_equal([[
   *
  **
-***]], draw_right_aligned_triangle(3))
+***
+]], draw_right_aligned_triangle(3))
 end
 
 

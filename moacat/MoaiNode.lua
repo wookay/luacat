@@ -21,6 +21,14 @@ function MoaiNode.addListener(self, listener, callback)
   })
 end
 
+function MoaiNode.addEndedListener(self, callback)
+  MoaiNode.addListener(self, function(event)
+    if Phase.ended == event.phase then
+      callback(event)
+    end
+  end)
+end
+
 function MoaiNode.doListener(self, event)
   if Layer == self.class then
     local mprop = self.partition:propForPoint(unpack(event.location))
