@@ -14,6 +14,10 @@ function Prop.initialize(self, deck)
   self.wrap = mprop
 end
 
+function Prop.setDeckIndex(self, deckIndex)
+  self.wrap:setIndex(deckIndex)
+end
+
 function Prop.setOrigin(self, origin)
   local size = self.deck.size
   local x = origin[1] - Screen.halfWidth + size[1]/2
