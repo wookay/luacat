@@ -26,8 +26,15 @@ local function _extract_filename_line_for_log_info(traceback)
     end
     text = traceback
   else
-    text = String.slice(traceback, 1, tailcall)
+    local from = 1 
+    local moai = string.find(traceback, 'MoaiInfo.lua', 1, PLAIN)
+    if moai then
+      from = moai
+      index = 2
+    end
+    text = String.slice(traceback, from, tailcall)
   end
+  --print('index', index, text)
   return _(_(_(_(_(text).
            split(": in function '")).at(index)).
            split(': ')[1]).split(LF)[2]).lstrip()

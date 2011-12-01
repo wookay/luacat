@@ -13,7 +13,7 @@ function test_moai_event()
   prop.origin = {0,0}
   prop.addListener(Prop.drag_listener)
   prop.addListener(Prop.ended_listener, function(event)
-     log_info(event.phase, event.location)
+     moai_info('event', event.phase, event.location)
   end)
   layer.add(prop)
 

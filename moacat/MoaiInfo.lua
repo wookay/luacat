@@ -32,11 +32,14 @@ function moai_properties(obj)
   for k, getter in pairs(Table.sort(getters)) do
     local name = String.slice(getter, 4, -1)
     --log_info('name', name)
-    value = obj[getter](obj)
-    if nil == value then
+    local val = { obj[getter](obj) }
+    local value = nil
+    if 0 == #val then
       value = 'nil'
+    elseif 1 == #val then
+      value = val[1]
     else
-      value = tostring(value)
+      value = inspect(val)
     end
     table.insert(result, "  " .. SWF(format, name, value))
   end
@@ -52,7 +55,6 @@ function inspect_moai_object(obj)
   return result
 end
 
-
 function moai_info(...)
   local rest = {...}
   local ary = {}
@@ -66,8 +68,8 @@ function moai_info(...)
     end 
   end
   if found_moai_object then
-    log_info_impl(unpack(ary))
+    log_info(unpack(ary))
   else
-    log_info_impl(...)
+    log_info(...)
   end
 end
