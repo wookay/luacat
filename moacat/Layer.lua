@@ -38,3 +38,10 @@ end
 function Layer.disableTouchEvents(self)
   Device.disableTouchEvents(self)
 end
+
+function Layer.coordForTopLeft(self)
+  local xMin, yMin, xMax, yMax = self.wrap:getRect()
+  local halfWidth = (xMax - xMin) / 2
+  local halfHeight = (yMax - yMin) / 2
+  return {{-halfWidth, -halfHeight}, {halfWidth, halfHeight}}
+end

@@ -37,7 +37,7 @@ function moai_properties(obj)
     if 0 == #val then
       value = 'nil'
     elseif 1 == #val then
-      value = val[1]
+      value = tostring(val[1])
     else
       value = inspect(val)
     end

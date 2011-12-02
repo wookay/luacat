@@ -268,6 +268,11 @@ function test_table_delete_at()
   assert_equal({6,7}, ary)
 end
 
+function test_table_flatten()
+  local t = {1,{2, {3,4}, 5}}
+  assert_equal({1,2,3,4,5}, Table.flatten(t))
+end
+
 if is_main() then 
   UnitTest.run()
 end

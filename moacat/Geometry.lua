@@ -15,6 +15,10 @@ function Rect.unpack(rect)
   return unpack({origin[1], origin[2], size[1], size[2]})
 end
 
+function Rect.pack(xMin, yMin, xMax, yMax)
+  return {{xMin,yMin},{xMax,yMax}}
+end
+
 function centered_rect_by_size(size)
   local halfWidth = size[1]/2
   local halfHeight = size[2]/2

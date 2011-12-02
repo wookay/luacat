@@ -131,6 +131,21 @@ function Table.include(self, element)
   return false
 end
 
+function Table.flatten(self)
+  local ary = {}
+  for _,e in pairs(self) do
+    if 'table' == type(e) then
+      local flatted = Table.flatten(e)
+      for _,v in pairs(flatted) do
+        table.insert(ary, v)
+      end
+    else
+      table.insert(ary, e)
+    end
+  end
+  return ary
+end
+
 function Table.shuffle(self)
   local ary = Table.to_a(self)
   try(function()
