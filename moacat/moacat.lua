@@ -1,7 +1,7 @@
 -- moacat.lua
 --                           wookay.noh at gmail.com 
 
-package.path = package.path .. ";../luacat/?.lua"
+require 'PackagePath'
 require 'luacat'
 
 require 'Screen'

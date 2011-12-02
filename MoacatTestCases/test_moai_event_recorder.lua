@@ -32,6 +32,9 @@ function test_moai_event_recorder()
   layer.addButton("Load", {210,225}, function()
     recorder.load()
   end)
+  layer.addButton("Exit", {210,325}, function()
+    System.exit()
+  end)
 
 end
 

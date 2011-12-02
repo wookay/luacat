@@ -46,28 +46,48 @@ function Device.enableTouchEvents(layer)
     sharedDeviceManager = DeviceManager.new() 
   end
   sharedDeviceManager.updateLayer(layer)
-  if MOAIInputMgr.device.touch then
+  if MOAIInputMgr.device.pointer then
+    MOAIInputMgr.device.pointer:setCallback(device_pointer_callback)
+    MOAIInputMgr.device.mouseLeft:setCallback(device_mouseLeft_callback)
+    --MOAIInputMgr.device.mouseRight:setCallback(device_mouseRight_callback)
+  --MOAIInputMgr.device.mouseMiddle:setCallback(device_mouseMiddle_callback)
+  else
     MOAIInputMgr.device.touch:setCallback(device_touch_callback)
   end
-  MOAIInputMgr.device.pointer:setCallback(device_pointer_callback)
-  MOAIInputMgr.device.mouseLeft:setCallback(device_mouseLeft_callback)
-  --MOAIInputMgr.device.mouseRight:setCallback(device_mouseRight_callback)
-  --MOAIInputMgr.device.mouseMiddle:setCallback(device_mouseMiddle_callback)
 end
 
 function Device.disableTouchEvents()
-  if MOAIInputMgr.device.touch then
+  if MOAIInputMgr.device.pointer then
+    MOAIInputMgr.device.pointer:setCallback(function() end)
+    MOAIInputMgr.device.mouseLeft:setCallback(function() end)
+    --MOAIInputMgr.device.mouseRight:setCallback(nil)
+    --MOAIInputMgr.device.mouseMiddle:setCallback(nil)
+  else
     MOAIInputMgr.device.touch:setCallback(function() end)
   end
-  MOAIInputMgr.device.pointer:setCallback(function() end)
-  MOAIInputMgr.device.mouseLeft:setCallback(function() end)
-  --MOAIInputMgr.device.mouseRight:setCallback(nil)
-  --MOAIInputMgr.device.mouseMiddle:setCallback(nil)
 end
 
 function device_touch_callback(eventType, idx, x, y, tapCount)
-  --MOAITouchSensor.TOUCH_DOWN
-  --MOAITouchSensor.TOUCH_UP
+  for k,l in pairs(sharedDeviceManager.layers) do
+    local worldX, worldY = l.layer.wrap:wndToWorld(x, y)
+    local phase = nil
+    if MOAITouchSensor.TOUCH_DOWN == eventType then
+      phase = Phase.began
+      l.deviceEvent.previousLocation = {worldX,worldY}
+    elseif MOAITouchSensor.TOUCH_MOVE == eventType then
+      phase = Phase.moved
+    elseif MOAITouchSensor.TOUCH_UP == eventType then
+      phase = Phase.ended
+    elseif MOAITouchSensor.TOUCH_CANCEL == eventType then
+      phase = Phase.cancelled
+    end
+    l.layer.doListener({
+      phase = phase,
+      location = {worldX,worldY},
+      previousLocation = l.deviceEvent.previousLocation,
+    })
+    l.deviceEvent.previousLocation = {worldX,worldY}
+  end
 end
 
 function device_pointer_callback(x, y)
