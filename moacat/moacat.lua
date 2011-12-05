@@ -16,6 +16,8 @@ require 'Event'
 require 'Geometry'
 
 require 'MoaiNode'
+require 'Viewport'
+require 'Transform'
 require 'Layer'
 require 'Deck'
 require 'Prop'

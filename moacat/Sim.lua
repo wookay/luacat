@@ -8,8 +8,15 @@ require 'Layer'
 
 Sim = extends(Object)
 
+function Sim.push(layer)
+  MOAISim.pushRenderPass(layer.wrap)
+end
+
 function Sim.layer()
-  local layer = Layer.new()
-  System.open(layer)
+  System.openWindow()
+
+  local viewport = Viewport.new()
+  local layer = Layer.new(viewport)
+  Sim.push(layer)
   return layer
 end  

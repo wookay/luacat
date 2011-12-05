@@ -5,6 +5,24 @@ package.path = package.path .. ";../moacat/?.lua"
 require 'moacat'
 
 function test_moai_file_system()
+
+  assert_true(
+    String.end_with(MOAIFileSystem:getAbsoluteFilePath(),
+                    'MoacatTestCases/'))
+  assert_true(
+    String.end_with(MOAIFileSystem:getAbsoluteDirectoryPath(),
+                    'MoacatTestCases/'))
+  assert_true(
+    String.end_with(MOAIFileSystem:getWorkingDirectory(),
+                    'MoacatTestCases/'))
+
+  assert_equal({".", "..", "fonts", "images"},
+               MOAIFileSystem:listDirectories())
+
+  assert_true(
+    Table.include(MOAIFileSystem:listFiles(),
+                  'test_moai_file_system.lua'))
+
   --[[
   MOAIFileSystem
  	affirmPath -- Creates a folder at 'path' if none exists.

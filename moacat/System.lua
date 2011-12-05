@@ -8,12 +8,11 @@ require 'Debug'
 
 System = extends(Object)
 
-function System.open(layer)
+function System.openWindow()
   Debug.setLogLevelAsNone()
   Debug.showLines()
 
   MOAISim.openWindow("sim", Screen.width, Screen.height)
-  MOAISim.pushRenderPass(layer.wrap)
 end
 
 function System.exit()

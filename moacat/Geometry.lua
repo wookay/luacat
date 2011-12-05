@@ -3,8 +3,11 @@
 
 
 Location = {}
-function Location.diff(a,b)
+function Location.diff(a, b)
   return {a[1] - b[1], a[2] - b[2]}
+end
+function Location.multiplyOffset(loc, offset, mul)
+  return {loc[1] + mul * offset[1], loc[2] + mul * offset[2]}
 end
 
 
