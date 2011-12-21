@@ -43,7 +43,6 @@ function extends(superclass)
     end,
 
     __index = function(self, name)
-
       if 'class' == name then
         return klass
       elseif "nil" ~= self.__type and 'table' == type(self.__value) then

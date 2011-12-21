@@ -23,6 +23,19 @@ function test_unittest()
 end
 
 
+function test_return_values()
+  function twovalues()
+    return 1,2
+  end
+
+  local a = twovalues()
+  assert_equal(1, a)
+
+  local a,b = twovalues()
+  assert_equal(1, a)
+  assert_equal(2, b)
+end
+
 if is_main() then
   UnitTest.run()
 end

@@ -33,10 +33,41 @@ function Prop.getOrigin(self)
   return {x,y}
 end
 
+function Prop.setParent(self, prop)
+  self.wrap:setParent(prop.wrap)
+end
+
+function Prop.getLocation(self)
+  return {self.wrap:getLoc()}
+end
+
+function Prop.setLocation(self, location)
+  self.wrap:setLoc(unpack(location))
+end
+
+function Prop.getPivot(self)
+  return {self.wrap:getPiv()}
+end
+
+function Prop.setPivot(selfk, pivot)
+  self.wrap:setPiv(unpack(pivot))
+end
+
+function Prop.getScale(self)
+  return {self.wrap:getScl()}
+end
+
+function Prop.setScale(self, scale)
+  self.wrap:setScl(unpack(scale))
+end
+
 -- listeners
 function Prop.drag_listener(event)
   event.target.wrap:addLoc(unpack(
     Location.diff(event.location, event.previousLocation)))
+  if event.callback then
+    event.callback(event)
+  end
 end
 
 function Prop.ended_listener(event)

@@ -11,11 +11,17 @@ System = extends(Object)
 function System.openWindow()
   Debug.setLogLevelAsNone()
   Debug.showLines()
+  --Debug.setHistogramEnabled()
 
   MOAISim.openWindow("sim", Screen.width, Screen.height)
 end
 
+
 function System.exit()
+  if Debug.HistogramEnabled then
+    MOAISim.forceGarbageCollection()
+    MOAISim.reportHistogram()
+  end
   print('exit')
   os.exit()
 end

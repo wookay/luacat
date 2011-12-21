@@ -126,8 +126,6 @@ function Inspector:putTable(t)
     self:puts('{...}')
   else
     --self:puts('<',self:getOrCreateCounter(t),'>{')
-    self:puts('{')
-    self:down()
 
       local length = #t
       local mt = getmetatable(t)
@@ -135,9 +133,14 @@ function Inspector:putTable(t)
       local string = type(__tostring) == 'function' and __tostring(t)
 
       if type(string) == 'string' and #string > 0 then
-        self:puts(' -- ', unescape(string))
+        self:puts(unescape(string))
+        --self:puts(' -- ', unescape(string))
         if length >= 1 then self:tabify() end -- tabify the array values
+        return self
       end
+
+    self:puts('{')
+    self:down()
 
       local comma = false
       for i=1, length do

@@ -2,6 +2,7 @@
 --                           wookay.noh at gmail.com 
 
 Debug = {}
+Debug.HistogramEnabled = false
 
 function Debug.setLogLevelAsNone()
   -- LOG_NONE, LOG_ERROR, LOG_WARNING, LOG_STATUS
@@ -23,4 +24,9 @@ function Debug.showLines()
 
   -- yellow
   MOAIDebugLines.setStyle(MOAIDebugLines.TEXT_BOX, 1, 1, 1, 0)
+end
+
+function Debug.setHistogramEnabled()
+  Debug.HistogramEnabled = true
+  MOAISim.setHistogramEnabled(true)
 end

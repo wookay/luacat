@@ -28,18 +28,29 @@ end
 
 log_ui( 'shape' ) -- test_logger.lua:29      UI shape
 
---[[
 
-test_logger.lua:8       nil
-test_logger.lua:9       123
-test_logger.lua:10      abc
-test_logger.lua:11      {1, 2, 3}
-test_logger.lua:12      {a = 1, b = 2}
-test_logger.lua:13      test 123 abc
-test_logger.lua:14      test nil : nil
-test_logger.lua:15      test {1} : {1}
-test_logger.lua:16      test {a=1} {b=2} : {a = 1} {b = 2}
-test_logger.lua:17      { a = 1, 
+-- __tostring
+local mt = {
+  __tostring = function()
+    return '<MT>'
+  end
+}
+local m = {}
+setmetatable(m, mt)
+log_info(m)
+
+
+--[[
+test_logger.lua:9       nil
+test_logger.lua:10      123
+test_logger.lua:11      abc
+test_logger.lua:12      {1, 2, 3}
+test_logger.lua:13      {a = 1, b = 2}
+test_logger.lua:14      test 123 abc
+test_logger.lua:15      test nil : nil
+test_logger.lua:16      test {1} : {1}
+test_logger.lua:17      test {a=1} {b=2} : {a = 1} {b = 2}
+test_logger.lua:18      { a = 1, 
   b = 2, 
   c = 3, 
   d = 4, 
@@ -49,9 +60,10 @@ test_logger.lua:17      { a = 1,
   h = 8, 
   i = 9, 
   j = 10, 
-  k = 11 }
-test_logger.lua:18      abc {1, 2, 3}
-test_logger.lua:19      {1, 2, 3} abc
-test_logger.lua:20      {{1, 2}, {3, 4}}
-
+  k = 11}
+test_logger.lua:19      abc {1, 2, 3}
+test_logger.lua:20      {1, 2, 3} abc
+test_logger.lua:21      {{1, 2}, {3, 4}}
+test_logger.lua:29      UI shape
+test_logger.lua:40      <MT>
 --]]

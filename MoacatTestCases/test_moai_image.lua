@@ -29,6 +29,11 @@ function test_moai_image()
                  Screen.height - deck.image.height}
   layer.add(prop)
 
+  local prop = Prop.new(deck)
+  prop.origin = {Screen.halfWidth - deck.image.width/2,
+                 Screen.halfHeight - deck.image.height/2}
+  layer.add(prop)
+
   assert_equal('MOAILayer2D', layer.wrap:getClassName()) 
   assert_equal(0, layer.wrap:getLoc()) 
 

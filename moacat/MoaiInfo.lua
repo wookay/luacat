@@ -60,7 +60,7 @@ function moai_info(...)
   local ary = {}
   local found_moai_object = false
   for k,v in pairs(rest) do
-    if type(v) ~= 'userdata' or nil == v.getClassName then
+    if nil == v.getClassName then
       table.insert(ary, v)
     else
       table.insert(ary, inspect_moai_object(v))
