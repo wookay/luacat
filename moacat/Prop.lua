@@ -4,6 +4,7 @@
 require 'luacat'
 require 'MoaiNode'
 require 'Geometry'
+require 'Anim'
 
 Prop = extends(MoaiNode)
 
@@ -11,6 +12,7 @@ function Prop.initialize(self, deck)
   local mprop = MOAIProp2D.new()
   mprop:setDeck(deck.wrap)
   self.deck = deck
+  self._grid = nil
   self.wrap = mprop
 end
 
@@ -60,6 +62,27 @@ end
 function Prop.setScale(self, scale)
   self.wrap:setScl(unpack(scale))
 end
+
+function Prop.setGrid(self, grid)
+  self._grid = grid
+  self.wrap:setGrid(grid.wrap)
+end
+
+function Prop.getGrid(self)
+  return self._grid
+end
+
+function Prop.setDeckRectDimension(self, dimension)
+  self.deck.wrap:setRect(-dimension, dimension, dimension, -dimension)
+  self.scale = {1, -1}
+end
+
+function Prop.animate(self, locations, duration)
+  local anim = Anim.new(self)
+  anim.setCurveWithLocations(locations, duration)
+  return anim
+end
+
 
 -- listeners
 function Prop.drag_listener(event)

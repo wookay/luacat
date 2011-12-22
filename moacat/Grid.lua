@@ -6,14 +6,14 @@ require 'MoaiNode'
 
 Grid = extends(MoaiNode)
 
-function Grid.initialize(self)
+function Grid.initialize(self, cellSize)
   local mgrid = MOAIGrid.new()
-  self._cellSize = {1,1}
+  self._cellSize = cellSize or {1,1}
   self.wrap = mgrid
 end
 
-function Grid.setCellSize(self, cellSize)
-  self._cellSize = cellSize
+function Grid.getCellSize(self)
+  return self._cellSize
 end
 
 function Grid.getRows(self)
