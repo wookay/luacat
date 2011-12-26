@@ -105,10 +105,22 @@ function extends(superclass)
       local getterName = 'get' .. String.capitalize(name)
       local setterName = 'set' .. String.capitalize(name)
       klass[getterName] = function(self)
-        return self.wrap[getterName](self.wrap)
+        local val = { self.wrap[getterName](self.wrap) }
+        if 0 == #val then
+          return nil 
+        elseif 1 == #val then
+          return val[1]
+        else
+          return val
+        end
       end
       klass[setterName] = function(self, val)
-        self.wrap[setterName](self.wrap, val)
+        local fun = self.wrap[setterName]
+        if 'table' == type(val) then
+          fun(self.wrap, unpack(val))
+        else
+          fun(self.wrap, val)
+        end
       end
     end
   end
