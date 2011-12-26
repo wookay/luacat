@@ -195,6 +195,27 @@ function test_synthesize()
   assert_equal(15, a.age)
 end
 
+function test_wrap_synthesize()
+  local A = extends(Object)
+  function A:initialize()
+    self.value = 1
+  end
+  function A:getVal()
+    return self.value
+  end 
+  function A:setVal(val)
+    self.value = val
+  end 
+  local B = extends(Object) 
+  function B.initialize(self)
+    self.wrap = A.new()
+  end
+  B.wrap_synthesize({'val'})
+
+  local b = B.new()
+  assert_equal(1, b.val)
+end
+
 function test_lua_object()
   assert_equal(3, ("abc"):len())
   assert_equal(3, _("abc"):length())

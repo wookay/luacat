@@ -100,6 +100,18 @@ function extends(superclass)
       end
     end
   end
+  klass.wrap_synthesize = function(list)
+    for _,name in pairs(list) do
+      local getterName = 'get' .. String.capitalize(name)
+      local setterName = 'set' .. String.capitalize(name)
+      klass[getterName] = function(self)
+        return self.wrap[getterName](self.wrap)
+      end
+      klass[setterName] = function(self, val)
+        self.wrap[setterName](self.wrap, val)
+      end
+    end
+  end
   return klass
 end
 
