@@ -77,10 +77,11 @@ function extends(superclass)
   klass.new = function(...)
     local initialize = _find_method_by_name('initialize', klass, superclass)
     local obj = {}
+    local instance = new_object(obj, klass.mt, 'object')
     if 'function' == type(initialize) then
-      initialize(obj, ...)
+      initialize(instance, ...)
     end 
-    return new_object(obj, klass.mt, 'object')
+    return instance
   end
   klass.import = function(dict, fun)
     local func = fun or function(k,v) return v end
@@ -122,6 +123,20 @@ function extends(superclass)
           fun(self.wrap, val)
         end
       end
+    end
+  end
+  klass.is_a = function(self, target)
+    if klass == target then
+      return true
+    else
+      local super = superclass
+      while nil ~= super do
+        if super == target then
+          return true
+        end
+        super = super.superclass
+      end
+      return false
     end
   end
   return klass

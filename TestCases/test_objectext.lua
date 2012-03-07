@@ -226,6 +226,24 @@ function test_lua_object()
   assert_equal("ABC", _("abc").upcase())
 end
 
+function test_self_call_in_initialize()
+  local A = extends(Object)
+  function A.initialize(self)
+    self.name = self.func_a()
+  end
+  function A.func_a(self)
+    return "A"
+  end
+  local a = A.new()
+  assert_equal("A", a.name)
+  assert_true(a.is_a(A))
+
+  local B = extends(A)
+  local b = B.new()
+  assert_true(b.is_a(B))
+  assert_true(b.is_a(A))
+end
+
 if is_main() then 
   UnitTest.run()
 end
